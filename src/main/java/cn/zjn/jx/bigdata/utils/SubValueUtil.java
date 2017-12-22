@@ -18,7 +18,10 @@ public class SubValueUtil {
             return;
 
         for(int i=views.size()-1;i>0;i--){
-            views.get(i).setZXYGDN(views.get(i).getZXYGDN()-views.get(i-1).getZXYGDN());
+            float subValue = views.get(i).getZXYGDN()-views.get(i-1).getZXYGDN();
+            if (subValue<0)
+                subValue=0;
+            views.get(i).setZXYGDN(subValue);
         }
         views.get(0).setZXYGDN(0);
     }

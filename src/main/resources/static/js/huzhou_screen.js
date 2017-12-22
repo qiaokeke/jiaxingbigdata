@@ -241,13 +241,13 @@ function item3() {
         series: [{
             name: '',
             type: 'bar',
-            data: [{
+            data: [/*{
                 name: 'NO.5 湖州凯研生物科技有限公司',
                 value: 180
             }, {
                 name: 'NO.4 湖州优创电子商务有限公司',
                 value: 280
-            }, {
+            }, */{
                 name: 'NO.3 湖州舒乐网络科技有限公司',
                 value: 380
             }, {
@@ -277,12 +277,12 @@ function item3() {
 //获取实时能耗排行
 function getConsumptionSort() {
     $.ajax({
-        url: '/company/getEConsumption',
+        url: '/jx/api/realTimeCompanys',
         dataType: 'json',
         success: function (myJson) {
             for (var i = 0; i < myJson.length; i++) {
                 var index = i + 1;
-                $("#cons").append('<tr class=\"text-center\"><td><span class=\"badge\">' + index + '</span></td><td>' + myJson[i].eName + '</td><td>' + myJson[i].consumption + '</td><td>' + myJson[i].water + '</td></tr>');
+                $("#cons").append('<tr class=\"text-center\"><td><span class=\"badge\">' + index + '</span></td><td>' + myJson[i].companyName + '</td><td>' + myJson[i].zxygdn + '</td><td>' + myJson[i].waterValue + '</td></tr>');
             }
         }
     })
@@ -290,33 +290,28 @@ function getConsumptionSort() {
 
 function getConsumptionTop5() {
     $.ajax({
-        url: '/company/getTop5Company',
+        url: '/jx/api/top5Companys',
         dataType: 'json',
         success: function (myJson) {
-            // for (var i = 0; i < myJson.length; i++) {
-            //     var index = i + 1;
-            //    $("#cons").append('<tr class=\"text-center\"><td><span class=\"badge\">'+index+'</span></td><td>'+myJson[i].eName+'</td><td>'+myJson[i].consumption+'</td><td>'+myJson[i].water+'</td></tr>');
-            // }
-            // $("#needWrap").wrap('<marquee id=\"affiche\" align=\"left\" behavior=\"scroll\" direction=\"up\" width=\"100%\" hspace=\"50\" vspace=\"20\" loop=\"-1\" scrollamount=\"3\" scrolldelay=\"100\" onMouseOut=\"this.start()\" onMouseOver=\"this.stop()\"></marquee>');
             //能耗榜单前五名
             myChart.setOption({
                 series: [{
                     name: '',
-                    data: [{
+                    data: [/*{
                         name: "NO.5 " + myJson[4].companyName,
-                        value: myJson[4].pZXYGDN
+                        value: myJson[4].zxygdn
                     }, {
                         name: "NO.4 " + myJson[3].companyName,
-                        value: myJson[3].pZXYGDN
-                    }, {
+                        value: myJson[3].zxygdn
+                    }, */{
                         name: "NO.3 " + myJson[2].companyName,
-                        value: myJson[2].pZXYGDN
+                        value: myJson[2].zxygdn
                     }, {
                         name: "NO.2 " + myJson[1].companyName,
-                        value: myJson[1].pZXYGDN
+                        value: myJson[1].zxygdn
                     }, {
                         name: "NO.1 " + myJson[0].companyName,
-                        value: myJson[0].pZXYGDN
+                        value: myJson[0].zxygdn
                     }]
                 }]
             });
@@ -355,7 +350,6 @@ function showUserProportion() {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        //color: ['rgb(101,212,229)', 'white', 'rgb(247,140,0)'],
         calculable: true,
         series: [{
             name: '用户占比',
@@ -882,7 +876,8 @@ function createDashboardC() {
  */
 
 //厂房轮播参数
-var comList = ['A1', 'A2', 'A3', 'A7', 'A5', 'A8', 'A9', 'A11', 'A12', 'A17', 'A18', 'A21', 'B1', 'B2', 'B3', 'B5', 'B6', 'B7', 'A10', 'B8', 'B9', 'A16', 'A20', 'V1', 'V2', 'V6', 'V7', 'V8', 'A15', 'A19', 'V12', 'B10', 'B11', 'A22', 'V11', 'V9', 'V10'];
+var comList = ['1', '2', '3'];
+var comNameList = ["雅莹集团","亮兮柯电气有限公司","捷顺旅游制品有限公司"];
 function showWE() {
     var comlen = comList.length;
     var comIndex = 0;
@@ -1011,7 +1006,7 @@ function showWE() {
     function getMyJson() {
         weChart = echarts.init(document.getElementById('center-middle'));
         //        请求路径
-        var setUrl = "/ssjc/water?aCode=" + comList[comIndex];
+        var setUrl = "/jx/api/hoursViews?companyCode=" + comList[comIndex];
         $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -1021,31 +1016,19 @@ function showWE() {
                 data_power = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                 data_water = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                 //处理时间
-                for (var index in myJson) {
-                    var timeStr = myJson[index].time.split(' ');
-                    myJson[index].time = timeStr[1];
-                    timeStr = myJson[index].time.split(":");
-                    myJson[index].time = parseInt(timeStr[0]);
-                }
                 for (var i in myJson) {
                     //控制水的能耗在10以下
                     if (myJson[i].water && myJson[i].time != 0 && myJson[i].water < 10) {
-                        data_water[myJson[i].time - 1] = myJson[i].water;
+                        data_water[myJson[i].hour - 1] = myJson[i].water;
                     }
-                    else if (myJson[i].electric && myJson[i] != 0) {
-                        data_power[myJson[i].time - 1] = myJson[i].electric;
+                    else if (myJson[i].zxygdn && myJson[i] != 0) {
+                        data_power[myJson[i].hour - 1] = myJson[i].zxygdn;
                     }
                 }
-                //获取y轴的值
-                powerY = Math.floor(Math.max.apply(null, data_power) * 1.25);
-                waterY = Math.floor(Math.max.apply(null, data_water) * 1.25);
-                powerY = 500;
-                console.log(comList[comIndex] + "用水量:" + data_water);
-                console.log("用电量: " + data_power);
                 weChart.hideLoading();
                 weChart.setOption({
                     title: {
-                        text: comList[comIndex] + '厂房水电能耗',
+                        text: comNameList[comIndex] + '厂房水电能耗',
                         textStyle: {
                             color: "white"
                         }

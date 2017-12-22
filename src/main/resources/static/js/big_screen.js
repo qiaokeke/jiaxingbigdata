@@ -1,11 +1,12 @@
 ﻿$(function() {
-  $("#filter").css('height', $(window).height()); /*设置滤可视高度镜层高度为文档*/
+  $("#filter").css('height', $(window).height()); /*设置滤镜层可视高度高度为文档*/
   setInterval("clock()", 1000);
   item2();
   fontDiv();
   showEnergyProportion();
   showUserProportion();
   item3();
+  getConsumptionTop5()
 });
 
 function clock() {
@@ -82,10 +83,6 @@ function item2() {
 function fontDiv() {
   var fontDiv = $("#fontDiv");
   var fDiv;
-  // for (var i = 0; i < 8; i++) {
-  //   fDiv = $("<div class='fDiv'>0</div>");
-  //   fontDiv.append(fDiv);
-  // }
   fDiv = $("<div class='fDiv'>0</div>");
   fontDiv.append(fDiv);
   fDiv = $("<div class='fDiv'>0</div>");
@@ -106,76 +103,122 @@ function fontDiv() {
 }
 
 function item3() {
-  var myChart = echarts.init(document.getElementById('center-bottom'));
+  myChart3 = echarts.init(document.getElementById('center-bottom'));
   // 指定图表的配置项和数据
-  var option = {
-    tooltip: {},
-    textStyle: {
-      color: '#fff',
-      fontSize: 20
-    },
-    grid: {
-      show: false,
-      left: 40,
-      right: 40,
-      top: 40,
-      bottom: 0
-    },
-    xAxis: {
-      show: false
-    },
-    yAxis: {
-      data: [],
-      show: false
-    },
-    series: [{
-      name: '',
-      type: 'bar',
-      data: [{
-        name: 'NO.5 15#厂房嘉兴进隆塑业有限公司',
-        value: 180
-      }, {
-        name: 'NO.4 1#厂房爱家电器嘉兴有限公司',
-        value: 280
-      }, {
-        name: 'NO.3 5#厂房嘉兴浩拓贸易有限公司',
-        value: 380
-      }, {
-        name: 'NO.2 17#厂房上海鸿研物流技术有限公司',
-        value: 480
-      }, {
-        name: 'NO.1 9#厂房嘉兴赛捷弹簧制造有限公司',
-        value: 580
-      }],
-      itemStyle: {
-        normal: {
-          color: '#7CF4F3'
-        }
+   option3 = {
+      title: {
+          text: '能耗榜单',
+          textAlign: 'center',
+          x: 'center',
+          textStyle: {
+              color: 'white',
+              fontSize: 20
+          }
       },
-      label: {
-        normal: {
-          show: true,
-          position: 'topLeft',
-          formatter: '{b}'
-        }
+      tooltip: {
+          trigger: 'item',
+          formatter: "{b}: <br/> {c}"
       },
-      barWidth: '10%'
-    }, {
-      name: '',
-      type: 'bar',
-      data: [600, 600, 600, 600, 600],
-      barWidth: '10%',
-      barGap: '0%',
-      itemStyle: {
-        normal: {
-          color: '#3D78D2'
-        }
-      }
-    }]
+      textStyle: {
+          color: '#fff',
+          fontSize: 20
+      },
+      grid: {
+          show: false,
+          left: 40,
+          right: 40,
+          top: 40,
+          bottom: 0
+      },
+      xAxis: {
+          show: false
+      },
+      yAxis: {
+          data: [],
+          show: false
+      },
+      series: [{
+          name: '',
+          type: 'bar',
+          data: [/*{
+              name: 'NO.5 湖州凯研生物科技有限公司',
+              value: 180
+          }, {
+              name: 'NO.4 湖州优创电子商务有限公司',
+              value: 280
+          }, */{
+              name: 'NO.3 湖州舒乐网络科技有限公司',
+              value: 380
+          }, {
+              name: 'NO.2 湖州恩赐智能科技有限公司',
+              value: 480
+          }, {
+              name: 'NO.1 湖州丽锦环保科技有限公司',
+              value: 580
+          }],
+          itemStyle: {
+              normal: {
+                  color: '#7CF4F3'
+              }
+          },
+          label: {
+              normal: {
+                  show: true,
+                  position: 'topLeft',
+                  formatter: '{b}'
+              }
+          },
+          barWidth: '10%'
+      }]
   };
+    myChart3.setOption(option3);
+}
+//获取实时能耗排行
+function getConsumptionSort() {
+    $.ajax({
+        url: '/company/getEConsumption',
+        dataType: 'json',
+        success: function (myJson) {
+            for (var i = 0; i < myJson.length; i++) {
+                var index = i + 1;
+                $("#cons").append('<tr class=\"text-center\"><td><span class=\"badge\">' + index + '</span></td><td>' + myJson[i].eName + '</td><td>' + myJson[i].consumption + '</td><td>' + myJson[i].water + '</td></tr>');
+            }
+        }
+    })
+}
 
-  // 使用刚指定的配置项和数据显示图表。
-  myChart.setOption(option);
+function getConsumptionTop5() {
+    $.ajax({
+        url: '/jx/api/top5Companys',
+        dataType: 'json',
+        success: function (myJson) {
+            //能耗榜单前五名
+            myChart3.setOption({
+                series: [{
+                    name: '',
+                    data: [/*{
+                        name: "NO.5 " + myJson[4].companyName,
+                        value: myJson[4].zxygdn
+                    }, {
+                        name: "NO.4 " + myJson[3].companyName,
+                        value: myJson[3].zxygdn
+                    }, */{
+                        name: "NO.3 " + myJson[2].companyName,
+                        value: myJson[2].zxygdn
+                    }, {
+                        name: "NO.2 " + myJson[1].companyName,
+                        value: myJson[1].zxygdn
+                    }, {
+                        name: "NO.1 " + myJson[0].companyName,
+                        value: myJson[0].zxygdn
+                    }]
+                }]
+            });
+        },
+        error: function () {
+            console.log("能耗排行json数据获取失败！");
+        }
+    });
 }
 
 // 显示消耗能源占比
