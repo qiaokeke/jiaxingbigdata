@@ -19,6 +19,9 @@ public class SubValueUtil {
 
         for(int i=views.size()-1;i>0;i--){
             float subValue = views.get(i).getZXYGDN()-views.get(i-1).getZXYGDN();
+            if(views.get(i-1).getZXYGDN()==0){
+                subValue=0;
+            }
             if (subValue<0)
                 subValue=0;
             views.get(i).setZXYGDN(subValue);

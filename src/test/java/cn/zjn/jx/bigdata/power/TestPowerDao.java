@@ -40,7 +40,7 @@ public class TestPowerDao {
 
     @Test
     public void testPowerHoursInfos(){
-        List<PowerZXYGDNHoursInfo> infos = powerDao.selectPowerZXYGDNHoursInfos("1");
+        List<PowerZXYGDNHoursInfo> infos = powerDao.selectPowerZXYGDNHoursInfos("3");
         logger.info(String.valueOf(infos.size()));
         for(PowerZXYGDNHoursInfo info:infos)
             logger.info(info.toString());
