@@ -12,7 +12,7 @@ public class WebController {
 
     @RequestMapping(value = "/jiaxing/indexDnhgl")
     public String rootIndexDnhgl(){
-            return "/jiaxing/root_index_dnhgl";
+        return "/jiaxing/root_index_dnhgl";
     }
 
     @RequestMapping("/jiaxing/login")
@@ -62,7 +62,7 @@ public class WebController {
 
     @RequestMapping(value = "/jiaxing/rootScreen")
     public String rootScreen(){
-        return "jiaxing/root_huzhou_screen";
+        return "jiaxing/root_jiaxing_screen";
     }
     @RequestMapping(value = "/jiaxing/rootManager")
     public String rootManager(){

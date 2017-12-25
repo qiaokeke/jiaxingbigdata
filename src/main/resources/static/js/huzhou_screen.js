@@ -20,7 +20,7 @@ $(function () {
     showUserEnergyProportion();
     chartOne();
     bannerPie();
-    bannerDashboard();
+    // bannerDashboard();
     showWE();
     getCoal();
     getConsumptionSort();
@@ -97,18 +97,13 @@ function chartOne() {
         },
         title: {text: '能耗走势图', textStyle: {color: '#fff'}},
         tooltip: {trigger: 'axis'},
-        legend: {data: ['水', '电'], textStyle: {color: '#fff'}},
+        legend: {data: [ '电'], textStyle: {color: '#fff'}},
         xAxis: {
             type: 'category',
             boundaryGap: false,
             data: ['八月', '九月', '十月','十一月','十二月']
         },
-        yAxis: [{
-            type: 'value',
-            min: 0,
-            max: 1000,
-            name: '吨'
-        },
+        yAxis: [
             {
                 type: 'value',
                 min: 0,
@@ -117,20 +112,8 @@ function chartOne() {
             }
         ],
         series: [{
-            name: '水',
-            type: 'line',
-            yAxisIndex: 0,
-            data: [522, 513, 654, 485, 666, 789],
-            itemStyle: {
-                normal: {
-                    color: '#65D4E5'
-                }
-            }
-        },
-            {
                 name: '电',
                 type: 'line',
-                yAxisIndex: 1,
                 data: [465, 496, 796, 323, 468, 798],
                 itemStyle: {
                     normal: {
@@ -340,7 +323,7 @@ function showUserProportion() {
             left: 'right',
             width: '20%',
             right: 0,
-            data: ['节能环保', '工业科技', '装备制造', '物流配送', '电子商务'],
+            data: ['服装', '智能家电', '其他'],
             textStyle: {
                 color: 'white',
                 fontSize: 12
@@ -377,11 +360,9 @@ function showUserProportion() {
                 }
             },
             data: [
-                {value: 16, name: '节能环保'},
-                {value: 15, name: '工业科技'},
-                {value: 3, name: '装备制造'},
-                {value: 1, name: '物流配送'},
-                {value: 1, name: '电子商务'}
+                {value: 17, name: '服装'},
+                {value: 73, name: '智能家电'},
+                {value: 10, name: '其他'}
             ],
             itemStyle: {
                 normal: {
@@ -427,14 +408,14 @@ function showEnergyProportion() {
             x: 'right',
             orient: 'vertical',
             y: 'top',
-            data: ['电能', '水能'],
+            data: ['电能'],
             textStyle: { //控制图例颜色
                 color: 'white',
                 fontWeight: 'bold',
                 fontSize: 12
             }
         },
-        color: [/*'rgb(247,140,0)', */ 'rgb(242,7,100)', 'rgb(135,0,242)'],
+        color: ['rgb(242,7,100)', 'rgb(135,0,242)'],
         calculable: true,
         series: [{
             name: '能源占比',
@@ -442,24 +423,18 @@ function showEnergyProportion() {
             radius: ['15%', '60%'],
             center: ['40%', '50%'],
             roseType: 'radius', //半径模式
-            // x: '50%',
             sort: 'ascending',
             labelLine: {
                 normal: {
-                    /*                    length: 10,
-                     length2: 10,*/
                     lineStyle: {
                         color: '#fff'
                     }
                 }
             },
             data: [{
-                value: 85,
+                value: 100,
                 name: '电能'
-            }, {
-                value: 15,
-                name: '水能'
-            },],
+            }],
             itemStyle: {
                 normal: {
                     label: {
@@ -505,7 +480,7 @@ function showUserEnergyProportion() {
             left: 'right',
             width: '20%',
             right: 0,
-            data: ['节能环保', '工业科技', '装备制造', '物流配送', '电子商务'],
+            data: ['服装', '智能家电', '其他'],
             textStyle: {
                 color: 'white',
                 fontSize: 12
@@ -524,11 +499,9 @@ function showUserEnergyProportion() {
                 }
             },
             data: [
-                {value: 32, name: '节能环保'},
-                {value: 30, name: '工业科技'},
-                {value: 9, name: '装备制造'},
-                {value: 6, name: '物流配送'},
-                {value: 7, name: '电子商务'}
+                {value: 17, name: '服装'},
+                {value: 73, name: '智能家电'},
+                {value: 10, name: '其他'}
             ],
             itemStyle: {
                 normal: {
@@ -892,11 +865,10 @@ function showWE() {
     }();
     //设置默认值
     var data_power = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var data_water = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     weChart.showLoading();
     option = {
         title: {
-            text: comList[comIndex] + '水电能耗',
+            text: comList[comIndex] + '电能耗',
             textStyle: {
                 color: "white"
             }
@@ -920,7 +892,7 @@ function showWE() {
         }],
         color: ['#675bba', '#d14a61'],
         legend: {
-            data: ['用水量','用电量'],
+            data: ['用电量'],
             textStyle: {
                 color: 'white'
             }
@@ -943,31 +915,9 @@ function showWE() {
             },
             data: xData
         }],
-        yAxis: [
-            {
-                type: 'value',
-                name: '用水量',
-                // min:0,
-                // max:10,
-                position: 'left',
-                axisLabel: {
-                    formatter: '{value} 立方米'
-                },
-                axisLine: {
-                    lineStyle:{
-                        color:'#675bba'
-                    }
-                },
-                splitLine:{
-                    lineStyle:{
-                        color:'#675bba'
-                    }
-                }
-            },
-            {
+        yAxis: [{
                 type: 'value',
                 name: '用电量',
-                position: 'right',
 //                    min: 0,
 //                    max: 2000,
                 axisLabel: {
@@ -986,15 +936,8 @@ function showWE() {
             }
         ],
         series: [{
-            name: '用水量',
-            type: 'bar',
-            yAxisIndex:0,
-            data: data_water
-        },
-            {
                 name: '用电量',
                 type: 'bar',
-                yAxisIndex:1,
                 data: data_power
             }
         ]
@@ -1014,34 +957,23 @@ function showWE() {
             success: function (myJson) {
                 //重置清零
                 data_power = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                data_water = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                 //处理时间
                 for (var i in myJson) {
-                    //控制水的能耗在10以下
-                    if (myJson[i].water && myJson[i].time != 0 && myJson[i].water < 10) {
-                        data_water[myJson[i].hour - 1] = myJson[i].water;
-                    }
-                    else if (myJson[i].zxygdn && myJson[i] != 0) {
+                    if (myJson[i].zxygdn && myJson[i] != 0) {
                         data_power[myJson[i].hour - 1] = myJson[i].zxygdn;
                     }
                 }
                 weChart.hideLoading();
                 weChart.setOption({
                     title: {
-                        text: comNameList[comIndex] + '厂房水电能耗',
+                        text: comNameList[comIndex] + '厂房电能耗',
                         textStyle: {
                             color: "white"
                         }
                     },
                     series: [{
-                        name: '用水量',
-                        data: data_water,
-                        yAxisIndex:0
-                    },
-                        {
                             name: '用电量',
-                            data: data_power,
-                            yAxisIndex:1
+                            data: data_power
                         }
                     ]
                 });
