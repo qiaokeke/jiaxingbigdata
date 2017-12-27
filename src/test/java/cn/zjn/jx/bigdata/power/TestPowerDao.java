@@ -2,6 +2,7 @@ package cn.zjn.jx.bigdata.power;
 
 import cn.zjn.jx.bigdata.dao.power.PowerDao;
 import cn.zjn.jx.bigdata.domain.power.PowerMeterZXYGDNRecordInfo;
+import cn.zjn.jx.bigdata.domain.power.PowerZJFPGInfo;
 import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,11 +41,27 @@ public class TestPowerDao {
 
     @Test
     public void testPowerHoursInfos(){
-        List<PowerZXYGDNHoursInfo> infos = powerDao.selectPowerZXYGDNHoursInfos("3");
+        List<PowerZXYGDNHoursInfo> infos = powerDao.selectPowerZXYGDNHoursInfosByCompanyCode("3");
         logger.info(String.valueOf(infos.size()));
         for(PowerZXYGDNHoursInfo info:infos)
             logger.info(info.toString());
     }
 
+    @Test
+    public void testSelectPowerZJFPGInfos(){
+        List<PowerZJFPGInfo> infos = powerDao.selectPowerZJFPGInfosByCompanyCodeAndTime("2","2017-12-24","2017-12-28");
+
+        for (PowerZJFPGInfo info:infos)
+            System.out.println(info);
+
+    }
+
+    @Test
+    public void testselectPowerZJFPGInfosBypCodeAndTime(){
+        List<PowerZJFPGInfo> infos = powerDao.selectPowerZJFPGInfosBypCodeAndTime("65381","2017-12-24","2017-12-28");
+        for (PowerZJFPGInfo info:infos)
+            System.out.println(info);
+
+    }
 
 }

@@ -1,6 +1,8 @@
 package cn.zjn.jx.bigdata.dao.power;
 
+import cn.zjn.jx.bigdata.domain.power.PowerMeterInfo;
 import cn.zjn.jx.bigdata.domain.power.PowerMeterZXYGDNRecordInfo;
+import cn.zjn.jx.bigdata.domain.power.PowerZJFPGInfo;
 import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -53,8 +55,78 @@ public interface PowerDao {
             ")\n" +
             "\n" +
             "ORDER BY hour\n"})
-    public List<PowerZXYGDNHoursInfo> selectPowerZXYGDNHoursInfos(String companyCode);
+    public List<PowerZXYGDNHoursInfo> selectPowerZXYGDNHoursInfosByCompanyCode(String companyCode);
 
 
+    @Select({"SELECT\n" +
+            "DATE_FORMAT(power_meter_record.p_time,'%Y-%m-%d') AS time,\n" +
+            "power_meter_record.p_code as pCode,\n" +
+            "power_meter_record.p_zxygdn AS zxygdnZ,\n" +
+            "power_meter_record.p_zxygdn_1 AS zxygdnJ,\n" +
+            "power_meter_record.p_zxygdn_2 AS zxygdnF,\n" +
+            "power_meter_record.p_zxygdn_3 AS zxygdP,\n" +
+            "power_meter_record.p_zxygdn_4 AS zxygdnG\n" +
+            "\n" +
+            "FROM\n" +
+            "power_meter_record,\n" +
+            "power_meter_info\n" +
+            "WHERE power_meter_info.company_code=#{arg0} and power_meter_info.meter_code=power_meter_record.p_code AND power_meter_record.id in(\n" +
+            "SELECT\n" +
+            "max(id)\n" +
+            "FROM\n" +
+            "power_meter_record\n" +
+            "WHERE\n" +
+            "p_time\n" +
+            "BETWEEN\n" +
+            "#{arg1}\n" +
+            "AND\n" +
+            "#{arg2}\n" +
+            "GROUP BY\n" +
+            "DAY(power_meter_record.p_time),\n" +
+            "power_meter_record.p_code\n" +
+            ")"})
+    public List<PowerZJFPGInfo> selectPowerZJFPGInfosByCompanyCodeAndTime(String companyCode,String sTime,String eTime);
+
+
+
+    @Select({"SELECT\n" +
+            "DATE_FORMAT(power_meter_record.p_time,'%Y-%m-%d') AS time,\n" +
+            "power_meter_record.p_code as pCode,\n" +
+            "power_meter_record.p_zxygdn AS zxygdnZ,\n" +
+            "power_meter_record.p_zxygdn_1 AS zxygdnJ,\n" +
+            "power_meter_record.p_zxygdn_2 AS zxygdnF,\n" +
+            "power_meter_record.p_zxygdn_3 AS zxygdP,\n" +
+            "power_meter_record.p_zxygdn_4 AS zxygdnG\n" +
+            "FROM\n" +
+            "power_meter_record\n" +
+            "WHERE\n" +
+            " power_meter_record.id in(\n" +
+            "SELECT\n" +
+            "max(id)\n" +
+            "FROM\n" +
+            "power_meter_record\n" +
+            "WHERE\n" +
+            "power_meter_record.p_code=#{arg0}\n" +
+            "AND\n" +
+            "p_time\n" +
+            "BETWEEN\n" +
+            "#{arg1}\n" +
+            "AND\n" +
+            "#{arg2}\n" +
+            "GROUP BY\n" +
+            "DAY(power_meter_record.p_time),\n" +
+            "power_meter_record.p_code\n" +
+            ")"})
+    public List<PowerZJFPGInfo> selectPowerZJFPGInfosBypCodeAndTime(String pCode,String sTime,String eTime);
+
+
+    @Select({"SELECT\n" +
+            "power_meter_info.meter_code AS pCode,\n" +
+            "power_meter_info.meter_name AS pName\n" +
+            "FROM\n" +
+            "power_meter_info\n" +
+            "WHERE\n" +
+            "power_meter_info.company_code=#{arg0}"})
+    public List<PowerMeterInfo> selectPowerMeterInfosByCompanyCode(String companyCode);
 
 }

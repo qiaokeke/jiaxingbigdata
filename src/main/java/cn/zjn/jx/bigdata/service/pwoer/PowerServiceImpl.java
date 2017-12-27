@@ -1,12 +1,10 @@
 package cn.zjn.jx.bigdata.service.pwoer;
 
 import cn.zjn.jx.bigdata.dao.power.PowerDao;
-import cn.zjn.jx.bigdata.domain.power.PowerMeterZXYGDNRecordInfo;
-import cn.zjn.jx.bigdata.domain.power.PowerMeterZXYGDNRecordView;
-import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursInfo;
-import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursView;
+import cn.zjn.jx.bigdata.domain.power.*;
 import cn.zjn.jx.bigdata.domain.powerandwater.PowerWaterZRecordView;
 import cn.zjn.jx.bigdata.utils.SubValueUtil;
+import cn.zjn.jx.bigdata.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,7 +77,7 @@ public class PowerServiceImpl implements PowerService {
 
     @Override
     public List<PowerZXYGDNHoursView> selectPowerZXYGDNHousrViews(String companyCode) {
-        List<PowerZXYGDNHoursInfo> infos = powerDao.selectPowerZXYGDNHoursInfos(companyCode);
+        List<PowerZXYGDNHoursInfo> infos = powerDao.selectPowerZXYGDNHoursInfosByCompanyCode(companyCode);
         List<PowerZXYGDNHoursView> views = new ArrayList<>();
 
         for(PowerZXYGDNHoursInfo info:infos){
@@ -100,7 +98,45 @@ public class PowerServiceImpl implements PowerService {
             views.add(view);
 
         }
-        SubValueUtil.subValue(views);
+        SubValueUtil.subValueOfPowerZXYGDNHoursViews(views);
+
+        return views;
+    }
+
+    @Override
+    public List<PowerZJFPGView> selectTswkPowerZJFPGViewsByCompanyCodeOrpCode(String companyCode,String pCode) {
+        List<PowerZJFPGInfo> infos = null;
+        if (pCode.equals("0"))
+            infos = powerDao.selectPowerZJFPGInfosByCompanyCodeAndTime(companyCode, TimeUtil.getTswkDate().get(1),TimeUtil.getTswkDate().get(2));
+        else
+            infos = powerDao.selectPowerZJFPGInfosBypCodeAndTime(pCode,TimeUtil.getTswkDate().get(1),TimeUtil.getTswkDate().get(2));
+        List<PowerZJFPGView> views = new ArrayList<>();
+        for (PowerZJFPGInfo info:infos){
+            boolean isAdd = false;
+            for(PowerZJFPGView view:views){
+                if(view.getTime().equals(info.getTime())){
+                    view.setZxygdnZ(view.getZxygdnZ()+info.getZxygdnZ());
+                    view.setZxygdnJ(view.getZxygdnJ()+info.getZxygdnJ());
+                    view.setZxygdnF(view.getZxygdnF()+info.getZxygdnF());
+                    view.setZxygdnP(view.getZxygdnP()+info.getZxygdnP());
+                    view.setZxygdnG(view.getZxygdnG()+info.getZxygdnG());
+                    isAdd =true;
+                }
+
+            }
+            if (isAdd) continue;
+
+            PowerZJFPGView view = new PowerZJFPGView();
+            view.setTime(info.getTime());
+            view.setZxygdnZ(info.getZxygdnZ());
+            view.setZxygdnJ(info.getZxygdnJ());
+            view.setZxygdnF(info.getZxygdnF());
+            view.setZxygdnP(info.getZxygdnP());
+            view.setZxygdnG(info.getZxygdnG());
+            views.add(view);
+
+        }
+        SubValueUtil.subValueOfPowerZJFPGViews(views);
 
         return views;
     }

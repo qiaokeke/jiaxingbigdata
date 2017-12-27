@@ -1,6 +1,7 @@
 package cn.zjn.jx.bigdata.service.pwoer;
 
 import cn.zjn.jx.bigdata.domain.power.PowerMeterZXYGDNRecordView;
+import cn.zjn.jx.bigdata.domain.power.PowerZJFPGView;
 import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursInfo;
 import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursView;
 import cn.zjn.jx.bigdata.domain.powerandwater.PowerWaterZRecordView;
@@ -21,4 +22,7 @@ public interface PowerService {
     public List<PowerWaterZRecordView> selectPowerWaterZRecordViews();
 
     public List<PowerZXYGDNHoursView> selectPowerZXYGDNHousrViews(String companyCode);
+
+    public List<PowerZJFPGView> selectTswkPowerZJFPGViewsByCompanyCodeOrpCode(String companyCode,String pCode);
+
 }

@@ -75,7 +75,8 @@
                 <!-- 中部 -->
                 <div class="col-lg-4 col-md-4 wrap" id="wrap-center">
                     <div id="center-top" class="text-center">
-                        <h2>秀洲高新技术产业开发区低碳能源大数据公共服务平台</h2>
+                        <h2>秀洲高新技术产业开发区</h2>
+                        <h2>低碳能源大数据公共服务平台</h2>
                         <div class="text-center time">
                             <span class="glyphicon glyphicon-time"></span>
                             <span class="now"></span>
@@ -138,7 +139,8 @@
                     <div id="right-top" class="set-height"></div>
                     <!-- 右边中部 -->
                     <div id="right-middle" class="set-height">
-                        <h5 style="margin-left: 40px;margin-top: 20px;">数据集中器在线数量和智能硬件在线数量</h5>
+                        <h3 style="margin-left: 40px;margin-top: 20px;">数据集中器在线数量: 4</h3>
+                        <h3 style="margin-left: 40px;margin-top: 20px;">智能硬件在线数量:   10</h3>
                     </div>
                     <!-- 右边底部 -->
                     <div id="right-bottom" class="set-height"></div>
