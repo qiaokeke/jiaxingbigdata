@@ -140,7 +140,8 @@ $("#enddate").datetimepicker({ format: 'Y-m-d', timepicker: false });
         click_qyydl = false;
         $("#qyydl").click(function(){
             if(!click_qyydl){
-                var acode = $("#ydlCom").val();
+                var acodeStr = $("#ydlCom").val().split(" ");
+                var acode = acodeStr[0];
                 var setUrl =  '/analysis/info?aCode='+acode+"&time="+thisDay.getFullYear()+"-"+parseInt(thisDay.getMonth()+1)+"-"+thisDay.getDate();
             $.ajax({
                 type: 'POST',

@@ -23,6 +23,7 @@
     <script src="/static/js/alert_null_data.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/common.js"></script>
+    <script src="/static/js/json2.js"></script>
 
     <script src="/static/js/datetimepicker/jquery.datetimepicker.js"></script>
     <!-- METISMENU SCRIPTS -->
@@ -218,18 +219,27 @@
 </div>
 <div id="footer-in"><#include "footer_1.html"></div>
 <script>
+    var companyInfomatins; //定义全局变量，存储公司信息
     $(function (){
         $.ajax({
             type: 'POST',
             dataType: 'json',
             async: true,
-            url: '/company/info',
+            url: '/jx/api/company/companyInfos',
             success: function(myJson) {
+//                companyInfomatins = JSON.stringify(myJson);
+                companyInfomatins = myJson;
                 for(var index in myJson){
-                    $("#name").append("<option>"+myJson[index].code+" "+myJson[index].name+"</option>");
-                    $("#companyName").append("<option>"+myJson[index].code+" "+myJson[index].name+"</option>");
-                    $("#ydlCom").append("<option>"+myJson[index].code+" "+myJson[index].name+"</option>");
-                    $("#qsComName").append("<option>"+myJson[index].code+" "+myJson[index].name+"</option>");
+                    $("#name").append("<option value="+myJson[index].companyCode+">"+myJson[index].companyCode+" "+myJson[index].companyName+"</option>");
+                    $("#companyName").append("<option value="+myJson[index].companyCode+">"+myJson[index].companyCode+" "+myJson[index].companyName+"</option>");
+                    $("#ydlCom").append("<option value="+myJson[index].companyCode+">"+myJson[index].companyCode+" "+myJson[index].companyName+"</option>");
+                    $("#qsComName").append("<option value="+myJson[index].companyCode+">"+myJson[index].companyCode+" "+myJson[index].companyName+"</option>");
+                }
+                //填充到公司电表信息下拉框
+                if(myJson[0].powerMeterInfos.length != 0){
+                    for(var i in myJson[0].powerMeterInfos){
+                        $("#companyMeter").append('<option value='+myJson[0].powerMeterInfos[i].pCode+'>'+myJson[0].powerMeterInfos[i].pCode+' '+myJson[0].powerMeterInfos[i].pName+'</option>');
+                    }
                 }
             },
             error:function(){

@@ -310,7 +310,7 @@
 <div id="footer-in"><#include "footer_1.html"></div>
 <script>
     //获取url上的参数
-    var urlStr =  decodeURI(window.location.href);
+ /*   var urlStr =  decodeURI(window.location.href);
     var num = urlStr.indexOf("?");
     urlStr = urlStr.substr(num+1); //取得所有参数
     pList = urlStr.split("&"); //各个参数放到数组里
@@ -319,27 +319,26 @@
     getP = pList[1].split('=');
     pList[1] = getP[1];
     $("#aCode").html(pList[0]);
-    $("#cName").html(pList[1]);
-
+    $("#cName").html(pList[1]);*/
     $.ajax({
-        url:'/company/info',
+        url:'/jx/api/company/companyInfos',
         dataType:'json',
         success:function(info){
             var index;
             for(var p in info){
-                $("#companyNameList").append('<option>'+info[p].code+' '+info[p].name+'</option>');
+                $("#companyNameList").append('<option>'+info[p].companyCode+' '+info[p].companyName+'</option>');
             }
             for(var i in info){
                 if(pList[0] === info[i].code){
                     index = i;
                 }
             }
-            if(info[index].type){
-                $("#cKind").html(info[index].type);
-            }
-           else {
+//            if(info[index].type != undefined){
+//                $("#cKind").html(info[index].type);
+//            }
+//           else {
                 $("#cKind").html('无');
-            }
+//            }
         },
         error: function(){
             console.log("公司信息获取失败。");
@@ -1271,7 +1270,6 @@
             [5, 21, 4], [5, 22, 2], [5, 23, 0], [6, 0, 1], [6, 1, 0], [6, 2, 0], [6, 3, 0], [6, 4, 0], [6, 5, 0], [6, 6, 0], [6, 7, 0], [6, 8, 0], [6, 9, 0], [6, 10, 1],
             [6, 11, 0], [6, 12, 2], [6, 13, 1], [6, 14, 3], [6, 15, 4], [6, 16, 0], [6, 17, 0], [6, 18, 0], [6, 19, 0], [6, 20, 1], [6, 21, 2], [6, 22, 2], [6, 23, 6]
         ];
-        console.log("data"+data[0][1]);
         calendarWeek = echarts.init(document.getElementById("calendar-week"));
         calendarWeekOption = {
             tooltip: {},

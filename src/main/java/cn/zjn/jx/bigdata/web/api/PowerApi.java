@@ -54,7 +54,7 @@ public class PowerApi {
 
     @RequestMapping("/tswkZJFPGViews")
     public List<PowerZJFPGView> getTswkZJFPGViews(@RequestParam("companyCode")String companyCode,@RequestParam("pCode") String pCode){
-        logger.info(pCode);
+        //logger.info(pCode);
         return powerService.selectTswkPowerZJFPGViewsByCompanyCodeOrpCode(companyCode,pCode);
     }
 

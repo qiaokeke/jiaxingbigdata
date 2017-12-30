@@ -91,7 +91,8 @@ $(function () {
             });
         $("#click_qs").click(function(){
             data_consition = [0, 0, 0, 0, 0,0,0];
-            var acode = $("#qsComName").val();
+            var acodeStr = $("#qsComName").val().split(" ");
+            var acode = acodeStr[0];
             var setUrl = '/analysis/state?aCode='+acode+'&time='+d.getFullYear()+'-'+thisMonth+'-'+d.getDate();
             $.ajax({
                 type: 'POST',

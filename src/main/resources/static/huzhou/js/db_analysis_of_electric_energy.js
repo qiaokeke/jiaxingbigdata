@@ -94,29 +94,33 @@ $(function (){
         click_qynh = false;
         $("#qynh").click(function(){
             if(!click_qynh){
+                var d = new Date();
+                var month = d.getMonth()+1;
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
                     async: true,
-                    url: '/jx/api/tswkZJFPGViews?companyCode=1&pCode=0',
+                    url: '/analysis/nenghao?aCode=B1'+'&time='+d.getFullYear()+'-'+month+'-'+d.getDate(),
                     success: function(data) {
-                        //处理时间为星期几
+                        //处理时间
                         for(var index in data){
+                            var timeStr = data[index].time.split(" ");
+                            data[index].time = timeStr[0];
                             data[index].time = new Date(data[index].time+'').getDay();
                         }
                         //装入数据
                         for (var index in data) {
                             var date = parseInt(data[index].time);
                             if(date!=0){
-                                data_tip[date - 1] = data[index].zxygdnJ;
-                                data_peak[date - 1] = data[index].zxygdnF;
-                                data_valley[date - 1] = data[index].zxygdnG;
-                                data_total[date -1 ] = data[index].zxygdnZ;
+                                data_tip[date - 1] = data[index].tip;
+                                data_peak[date - 1] = data[index].peak;
+                                data_valley[date - 1] = data[index].valley;
+                                data_total[date -1 ] = data[index].total;
                             }else{
-                                data_tip[6] = data[index].zxygdnJ;
-                                data_peak[6] = data[index].zxygdnF;
-                                data_valley[6] = data[index].zxygdnG;
-                                data_total[6] = data[index].zxygdnZ;
+                                data_tip[6] = data[index].tip;
+                                data_peak[6] = data[index].peak;
+                                data_valley[6] = data[index].valley;
+                                data_total[6] = data[index].total;
                             }
                         }
                         //表格重新绘制
@@ -150,14 +154,15 @@ $(function (){
             }
         });
     $("#clickNH").click(function(){
-        var allConsumption = 0;//统计所有能耗
          data_tip = [0,0,0,0,0,0,0];  //尖能耗
          data_peak = [0,0,0,0,0,0,0];  //峰能耗
          data_valley = [0,0,0,0,0,0,0]; //谷能耗
          data_total = [0,0,0,0,0,0,0];  //总能耗
-        var acode = $("#name").val();
-        var pCode = $("#companyMeter").val();
-        var setUrl = '/jx/api/tswkZJFPGViews?companyCode='+acode+'&pCode='+pCode;
+        var acodeStr = $("#name").val().split(" ");
+        var acode = acodeStr[0];
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var setUrl = '/analysis/nenghao?aCode='+acode+'&time='+d.getFullYear()+'-'+month+'-'+d.getDate();
         $.ajax({
             type: 'POST',
             dataType: 'json',
@@ -171,30 +176,25 @@ $(function (){
                 }
                 //处理时间
                 for(var index in data){
+                    var timeStr = data[index].time.split(" ");
+                    data[index].time = timeStr[0];
                     data[index].time = new Date(data[index].time+'').getDay();
                 }
                 //装入数据
                 for (var index in data) {
                     var date = parseInt(data[index].time);
                     if(date!=0){
-                        data_tip[date - 1] = data[index].zxygdnJ;
-                        data_peak[date - 1] = data[index].zxygdnF;
-                        data_valley[date - 1] = data[index].zxygdnG;
-                        data_total[date -1 ] = data[index].zxygdnZ;
+                        data_tip[date - 1] = data[index].tip;
+                        data_peak[date - 1] = data[index].peak;
+                        data_valley[date - 1] = data[index].valley;
+                        data_total[date -1 ] = data[index].total;
                     }else{
-                        data_tip[6] = data[index].zxygdnJ;
-                        data_peak[6] = data[index].zxygdnF;
-                        data_valley[6] = data[index].zxygdnG;
-                        data_total[6] = data[index].zxygdnZ;
+                        data_tip[6] = data[index].tip;
+                        data_peak[6] = data[index].peak;
+                        data_valley[6] = data[index].valley;
+                        data_total[6] = data[index].total;
                     }
 
-                }
-                //再次判断，当数据全为0时提示无数据
-                for(var i = 0;i < data_total.length;i++){
-                    allConsumption += data_total[i];
-                }
-                if(allConsumption == 0){
-                    nullData();
                 }
                 //表格重新绘制
                 mChart1.hideLoading();
@@ -224,20 +224,7 @@ $(function (){
             }
         });
     });
-    //当选择公司下拉框发生改变时
-    $("#name").change(function(){
-        // companyInfomatins = JSON.parse(companyInfomatins);
-        var comIndex = parseInt($("#name").val()) - 1;
-        $("#companyMeter").html("");
-        $("#companyMeter").append('<option value='+0+'>'+'0  所有电表</option>');
-        // 填充到公司电表信息下拉框
-       if(companyInfomatins[comIndex].powerMeterInfos.length != 0){
-           for(var i in companyInfomatins[comIndex].powerMeterInfos){
-               $("#companyMeter").append('<option value='+companyInfomatins[comIndex].powerMeterInfos[i].pCode+'>'+companyInfomatins[comIndex].powerMeterInfos[i].pCode+' '+companyInfomatins[comIndex].powerMeterInfos[i].pName+'</option>');
-           }
-       }
     });
-});
 <!--对日历的操作限制-->
     function showChartZZT() {
         var queryHY = document.getElementById("name").value; //行业
