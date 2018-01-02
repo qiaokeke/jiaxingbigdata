@@ -33,7 +33,15 @@ public class TimeUtil {
     }
 
 
+    public static Map<Integer,String >getYdayDate(){
+        String formatter = "yyyy-MM-dd";
 
+        Map<Integer,String> tswkDateMap = new HashMap();
+        tswkDateMap.put(1,new SimpleDateFormat(formatter).format(new Date(new Date().getTime()-2*24*60*60*1000)));
+        tswkDateMap.put(2,new SimpleDateFormat(formatter).format(new Date(new Date().getTime()+60*60*1000)));
+        tswkDateMap.put(3,String.valueOf(2));
+        return tswkDateMap;
+    }
 
 
 }

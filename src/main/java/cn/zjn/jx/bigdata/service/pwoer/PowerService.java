@@ -25,4 +25,7 @@ public interface PowerService {
 
     public List<PowerZJFPGView> selectTswkPowerZJFPGViewsByCompanyCodeOrpCode(String companyCode,String pCode);
 
+    public PowerZJFPGView selectYdayPowerZJFPGViewByCompanyCode(String companyCode);
+
+
 }

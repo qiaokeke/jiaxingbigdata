@@ -58,5 +58,9 @@ public class PowerApi {
         return powerService.selectTswkPowerZJFPGViewsByCompanyCodeOrpCode(companyCode,pCode);
     }
 
+    @RequestMapping("/ydayZJFPGView")
+    public PowerZJFPGView getYdayZJFPGView(@RequestParam("companyCode") String companyCode){
+        return powerService.selectYdayPowerZJFPGViewByCompanyCode(companyCode);
+    }
 
 }

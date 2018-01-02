@@ -19,7 +19,7 @@ public class BigdataApplicationTests {
 
 	@Test
 	public void testgetTswkDate(){
-		Map<Integer,String> map =  TimeUtil.getTswkDate();
+		Map<Integer,String> map =  TimeUtil.getYdayDate();
 		System.out.println(map.get(1));
 		System.out.println(map.get(2));
 		System.out.println(map.get(3));

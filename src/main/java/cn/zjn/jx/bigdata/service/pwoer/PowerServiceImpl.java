@@ -141,6 +141,42 @@ public class PowerServiceImpl implements PowerService {
         return views;
     }
 
+    @Override
+    public PowerZJFPGView selectYdayPowerZJFPGViewByCompanyCode(String companyCode) {
+        List<PowerZJFPGInfo> infos = null;
+        infos = powerDao.selectPowerZJFPGInfosByCompanyCodeAndTime(companyCode, TimeUtil.getYdayDate().get(1),TimeUtil.getYdayDate().get(2));
+        if (infos.size()<=1)
+            return new PowerZJFPGView();
+        List<PowerZJFPGView> views = new ArrayList<>();
+        for (PowerZJFPGInfo info:infos){
+            boolean isAdd = false;
+            for(PowerZJFPGView view:views){
+                if(view.getTime().equals(info.getTime())){
+                    view.setZxygdnZ(view.getZxygdnZ()+info.getZxygdnZ());
+                    view.setZxygdnJ(view.getZxygdnJ()+info.getZxygdnJ());
+                    view.setZxygdnF(view.getZxygdnF()+info.getZxygdnF());
+                    view.setZxygdnP(view.getZxygdnP()+info.getZxygdnP());
+                    view.setZxygdnG(view.getZxygdnG()+info.getZxygdnG());
+                    isAdd =true;
+                }
+
+            }
+            if (isAdd) continue;
+
+            PowerZJFPGView view = new PowerZJFPGView();
+            view.setTime(info.getTime());
+            view.setZxygdnZ(info.getZxygdnZ());
+            view.setZxygdnJ(info.getZxygdnJ());
+            view.setZxygdnF(info.getZxygdnF());
+            view.setZxygdnP(info.getZxygdnP());
+            view.setZxygdnG(info.getZxygdnG());
+            views.add(view);
+        }
+        SubValueUtil.subValueOfPowerZJFPGViews(views);
+
+        return views.get(0);
+    }
+
 
     class PowerMeterZXYGDNRecordViewCompare implements Comparator{
 
