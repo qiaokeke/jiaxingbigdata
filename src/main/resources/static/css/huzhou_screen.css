@@ -224,6 +224,10 @@ span.badge {
 #right-middle{
 	height:35%;
 }
+
+#right-middle-child{
+    height: 75%;
+}
 #right-bottom {
     height: 32%;
 }

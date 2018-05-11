@@ -1,7 +1,6 @@
 package cn.zjn.jx.bigdata.utils;
 
-import cn.zjn.jx.bigdata.domain.power.PowerZJFPGView;
-import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursView;
+import cn.zjn.jx.bigdata.domain.power.*;
 
 import java.util.List;
 
@@ -18,7 +17,6 @@ public class SubValueUtil {
         if (views.size()==0)
             return;
 
-
         for(int i=views.size()-1;i>0;i--){
             float subValue = views.get(i).getZXYGDN()-views.get(i-1).getZXYGDN();
             if(views.get(i-1).getZXYGDN()==0){
@@ -30,6 +28,24 @@ public class SubValueUtil {
         }
         views.get(0).setZXYGDN(0);
     }
+
+
+
+    public static void subValueOfPowerZXYGDNViews(List<PowerZXYGDNView> views){
+        if (views.size()==0)
+            return;
+        for(int i=views.size()-1;i>0;i--){
+            float subValue = views.get(i).getZXYGDN()-views.get(i-1).getZXYGDN();
+            if(views.get(i-1).getZXYGDN()==0){
+                subValue=0;
+            }
+            if (subValue<0)
+                subValue=0;
+            views.get(i).setZXYGDN(subValue);
+        }
+        views.get(0).setZXYGDN(0);
+    }
+
 
     public static void subValueOfPowerZJFPGViews(List<PowerZJFPGView> views){
         if (views.size()==0)

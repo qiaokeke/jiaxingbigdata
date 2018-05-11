@@ -1,9 +1,6 @@
 package cn.zjn.jx.bigdata.web.api;
 
-import cn.zjn.jx.bigdata.domain.power.PowerMeterZXYGDNRecordView;
-import cn.zjn.jx.bigdata.domain.power.PowerZJFPGView;
-import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursInfo;
-import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursView;
+import cn.zjn.jx.bigdata.domain.power.*;
 import cn.zjn.jx.bigdata.domain.powerandwater.PowerWaterZRecordView;
 import cn.zjn.jx.bigdata.service.pwoer.PowerService;
 import org.slf4j.Logger;
@@ -58,9 +55,26 @@ public class PowerApi {
         return powerService.selectTswkPowerZJFPGViewsByCompanyCodeOrpCode(companyCode,pCode);
     }
 
+    @RequestMapping("/tswkZXYGDNViews")
+    public List<PowerZXYGDNView> getTswkZXYGDNViews(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode){
+        //logger.info(pCode);
+        return powerService.selectTswkPowerZXYGDNViewsByCompanyCodeOrpCode(companyCode,pCode);
+    }
+
+    @RequestMapping("/yearZXYGDNViews")
+    public List<PowerZXYGDNView> getYearZXYGDNViews(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode){
+        return powerService.selectYearPowerZXYGDNViewsByCompanyCodeOrpCode(companyCode,pCode);
+    }
+
     @RequestMapping("/ydayZJFPGView")
     public PowerZJFPGView getYdayZJFPGView(@RequestParam("companyCode") String companyCode){
         return powerService.selectYdayPowerZJFPGViewByCompanyCode(companyCode);
     }
+
+
+
+
+
+
 
 }

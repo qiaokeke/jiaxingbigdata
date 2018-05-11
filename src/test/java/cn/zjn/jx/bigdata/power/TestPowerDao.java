@@ -1,9 +1,9 @@
 package cn.zjn.jx.bigdata.power;
 
 import cn.zjn.jx.bigdata.dao.power.PowerDao;
-import cn.zjn.jx.bigdata.domain.power.PowerMeterZXYGDNRecordInfo;
-import cn.zjn.jx.bigdata.domain.power.PowerZJFPGInfo;
-import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursInfo;
+import cn.zjn.jx.bigdata.domain.power.*;
+import cn.zjn.jx.bigdata.utils.TimeUtil;
+import cn.zjn.jx.bigdata.utils.domain.TswkDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -63,5 +63,45 @@ public class TestPowerDao {
             System.out.println(info);
 
     }
+
+
+    @Test
+    public void testSelectDayinfos(){
+
+        TswkDate tswkDate = TimeUtil.getTswkDateFormat();
+        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNDayInfosBypCodeAndTime("65381",TimeUtil.TswkSTimeString,TimeUtil.TswkETimeString);
+
+        for (PowerZXYGDNInfo info:infos)
+            System.out.println(info);
+    }
+
+    @Test
+    public void testSelectDayinfosbyCompanycode(){
+
+        TswkDate tswkDate = TimeUtil.getTswkDateFormat();
+        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNDayInfosBycompanyCodeAndTime("1",tswkDate.getFirstDateString(),tswkDate.getEndDateString());
+
+        for (PowerZXYGDNInfo info:infos)
+            System.out.println(info);
+    }
+
+    @Test
+    public void testSelectMonthInfosbyCompanycode(){
+        System.out.println(TimeUtil.YearSTimeString+"  "+ TimeUtil.YearETimeString);
+        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNMonthInfosBycompanyCodeAndTime("1",TimeUtil.YearSTimeString,TimeUtil.YearETimeString);
+
+        for (PowerZXYGDNInfo info:infos)
+            System.out.println(info);
+    }
+    @Test
+    public void testSelectMonthInfosbyPcode(){
+        System.out.println(TimeUtil.YearSTimeString+"  "+ TimeUtil.YearETimeString);
+        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNMonthInfosBypCodeAndTime("65381",TimeUtil.YearSTimeString,TimeUtil.YearETimeString);
+
+
+        for (PowerZXYGDNInfo info:infos)
+            System.out.println(info);
+    }
+
 
 }

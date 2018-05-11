@@ -10,13 +10,15 @@ package cn.zjn.jx.bigdata.domain.power;
 public class PowerMeterInfo {
     String pCode;
     String pName;
+    int beiLv;
 
     public PowerMeterInfo() {
     }
 
-    public PowerMeterInfo(String pCode, String pName) {
+    public PowerMeterInfo(String pCode, String pName,int beiLv) {
         this.pCode = pCode;
         this.pName = pName;
+        this.beiLv = beiLv;
     }
 
     public String getpCode() {
@@ -37,11 +39,21 @@ public class PowerMeterInfo {
         this.pName = pName;
     }
 
+
+    public int getBeiLv() {
+        return beiLv;
+    }
+
+    public void setBeiLv(int beiLv) {
+        this.beiLv = beiLv;
+    }
+
     @Override
     public String toString() {
         return "PowerMeterInfo{" +
                 "pCode='" + pCode + '\'' +
                 ", pName='" + pName + '\'' +
+                ", beiLv=" + beiLv +
                 '}';
     }
 }

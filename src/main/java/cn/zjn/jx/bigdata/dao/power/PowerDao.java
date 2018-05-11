@@ -1,13 +1,12 @@
 package cn.zjn.jx.bigdata.dao.power;
 
-import cn.zjn.jx.bigdata.domain.power.PowerMeterInfo;
-import cn.zjn.jx.bigdata.domain.power.PowerMeterZXYGDNRecordInfo;
-import cn.zjn.jx.bigdata.domain.power.PowerZJFPGInfo;
-import cn.zjn.jx.bigdata.domain.power.PowerZXYGDNHoursInfo;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import cn.zjn.jx.bigdata.domain.power.*;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.cache.Cache;
 
 import java.util.List;
+
+import static org.apache.coyote.http11.Constants.a;
 
 /**
  * @Author: qiao
@@ -20,21 +19,23 @@ import java.util.List;
 @Mapper
 public interface PowerDao {
 
-
-    @Select({"SELECT\n" +
-            "power_meter_info.meter_code AS meterCode,\n" +
-            "power_meter_info.company_code AS companyCode,\n" +
-            "company_info.company_name AS companyName,\n" +
-            "MAX(power_meter_record.p_zxygdn) AS ZXYGDN\n" +
-            "\n" +
-            "FROM\n" +
-            "power_meter_info\n" +
-            "LEFT JOIN company_info ON power_meter_info.company_code = company_info.company_code\n" +
-            "LEFT JOIN power_meter_record ON power_meter_record.p_code = power_meter_info.meter_code\n" +
-            "GROUP BY\n" +
-            "meterCode\n" +
-            "ORDER BY\n" +
-            "companyCode"})
+    /**
+     *  {"SELECT\n" +
+     "power_meter_info.meter_code AS meterCode,\n" +
+     "power_meter_info.company_code AS companyCode,\n" +
+     "company_info.company_name AS companyName,\n" +
+     "MAX(power_meter_record.p_zxygdn) AS ZXYGDN\n" +
+     "\n" +
+     "FROM\n" +
+     "power_meter_info\n" +
+     "LEFT JOIN company_info ON power_meter_info.company_code = company_info.company_code\n" +
+     "LEFT JOIN power_meter_record ON power_meter_record.p_code = power_meter_info.meter_code\n" +
+     "GROUP BY\n" +
+     "meterCode\n" +
+     "ORDER BY\n" +
+     "companyCode"}
+     * @return
+     */
     public List<PowerMeterZXYGDNRecordInfo> selectPowerZXYGDNRecordInfos();
 
 
@@ -129,4 +130,13 @@ public interface PowerDao {
             "power_meter_info.company_code=#{arg0}"})
     public List<PowerMeterInfo> selectPowerMeterInfosByCompanyCode(String companyCode);
 
+
+    public List<PowerZXYGDNInfo> selectPowerZXYGDNDayInfosBypCodeAndTime(@Param("pCode") String pCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
+
+    public List<PowerZXYGDNInfo> selectPowerZXYGDNDayInfosBycompanyCodeAndTime(@Param("companyCode") String companyCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
+
+
+    public List<PowerZXYGDNInfo> selectPowerZXYGDNMonthInfosBypCodeAndTime(@Param("pCode") String pCode, @Param("sTime") String sTime, @Param("eTime") String eTime);
+
+    public List<PowerZXYGDNInfo> selectPowerZXYGDNMonthInfosBycompanyCodeAndTime(@Param("companyCode") String companyCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
 }

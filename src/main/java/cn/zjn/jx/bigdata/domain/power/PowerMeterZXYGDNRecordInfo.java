@@ -1,5 +1,7 @@
 package cn.zjn.jx.bigdata.domain.power;
 
+import java.io.Serializable;
+
 /**
  * @Author: qiao
  * @Description:
@@ -7,7 +9,9 @@ package cn.zjn.jx.bigdata.domain.power;
  * @Modified By:
  * @Email: qiaokekeshu@163.com
  */
-public class PowerMeterZXYGDNRecordInfo {
+public class PowerMeterZXYGDNRecordInfo implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     String meterCode;
     String companyCode;
@@ -59,7 +63,7 @@ public class PowerMeterZXYGDNRecordInfo {
     @Override
     public String toString() {
         return "PowerMeterZXYGDNRecordInfo{" +
-                "meterCode='" + meterCode + '\'' +
+                "pCode='" + meterCode + '\'' +
                 ", companyCode='" + companyCode + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", ZXYGDN='" + ZXYGDN + '\'' +

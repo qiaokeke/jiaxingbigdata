@@ -1,5 +1,7 @@
 package cn.zjn.jx.bigdata.domain.power;
 
+import java.io.Serializable;
+
 /**
  * @Author: qiao
  * @Description:
@@ -51,7 +53,7 @@ public class PowerZXYGDNHoursInfo {
     @Override
     public String toString() {
         return "PowerZXYGDNHoursInfo{" +
-                "meterCode='" + meterCode + '\'' +
+                "pCode='" + meterCode + '\'' +
                 ", hour=" + hour +
                 ", ZXYGDN=" + ZXYGDN +
                 '}';

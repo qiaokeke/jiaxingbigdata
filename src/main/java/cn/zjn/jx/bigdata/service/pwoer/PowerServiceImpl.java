@@ -1,10 +1,13 @@
 package cn.zjn.jx.bigdata.service.pwoer;
 
+import cn.zjn.jx.bigdata.dao.company.CompanyDao;
 import cn.zjn.jx.bigdata.dao.power.PowerDao;
 import cn.zjn.jx.bigdata.domain.power.*;
 import cn.zjn.jx.bigdata.domain.powerandwater.PowerWaterZRecordView;
+import cn.zjn.jx.bigdata.utils.MergeUtil;
 import cn.zjn.jx.bigdata.utils.SubValueUtil;
 import cn.zjn.jx.bigdata.utils.TimeUtil;
+import cn.zjn.jx.bigdata.utils.domain.TswkDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,9 @@ import java.util.*;
  */
 @Service
 public class PowerServiceImpl implements PowerService {
+
+    @Autowired
+    CompanyDao companyDao;
 
     @Autowired
     PowerDao powerDao;
@@ -48,6 +54,7 @@ public class PowerServiceImpl implements PowerService {
         Collections.sort(powerMeterZXYGDNRecordViewList,new PowerMeterZXYGDNRecordViewCompare());
         return powerMeterZXYGDNRecordViewList;
     }
+
 
     @Override
     public List<PowerWaterZRecordView> selectPowerWaterZRecordViews() {
@@ -178,6 +185,45 @@ public class PowerServiceImpl implements PowerService {
     }
 
 
+    /**
+     * @dep 根据公司号或者表号查询本周的正向有功电能数据
+     * @param companyCode
+     * @param pCode
+     * @return
+     */
+    @Override
+    public List<PowerZXYGDNView> selectTswkPowerZXYGDNViewsByCompanyCodeOrpCode(String companyCode, String pCode) {
+        List<PowerZXYGDNInfo> infos ;
+        TswkDate tswkDate = TimeUtil.getTswkDateFormat();
+        if (pCode.equals("0"))
+            infos = powerDao.selectPowerZXYGDNDayInfosBycompanyCodeAndTime(companyCode, tswkDate.getFirstDateString(),tswkDate.getEndDateString());
+        else
+            infos = powerDao.selectPowerZXYGDNDayInfosBypCodeAndTime(pCode,tswkDate.getFirstDateString(),tswkDate.getEndDateString());
+        List<PowerZXYGDNView> views ;
+        views = MergeUtil.mergeZXYGDNInfos2Views(infos);
+        SubValueUtil.subValueOfPowerZXYGDNViews(views);
+        return views;
+    }
+
+    @Override
+    public List<PowerZXYGDNView> selectYearPowerZXYGDNViewsByCompanyCodeOrpCode(String companyCode, String pCode) {
+        List<PowerZXYGDNInfo> infos ;
+
+        if (pCode.equals("0"))
+            infos = powerDao.selectPowerZXYGDNMonthInfosBycompanyCodeAndTime(companyCode,TimeUtil.YearSTimeString,TimeUtil.YearETimeString);
+        else
+            infos = powerDao.selectPowerZXYGDNMonthInfosBypCodeAndTime(pCode,TimeUtil.YearSTimeString,TimeUtil.YearETimeString);
+        List<PowerZXYGDNView> views;
+        views = MergeUtil.mergeZXYGDNInfos2Views(infos);
+        SubValueUtil.subValueOfPowerZXYGDNViews(views);
+        return views;
+    }
+
+
+    /**
+     * 排序时使用
+     */
+
     class PowerMeterZXYGDNRecordViewCompare implements Comparator{
 
         @Override
@@ -187,12 +233,10 @@ public class PowerServiceImpl implements PowerService {
 
             float v1 = view1.getZXYGDN();
             float v2 = view2.getZXYGDN();
-
             if(v1>v2)
                 return -1;
             if(v1<v2)
                 return 1;
-
             return 0;
         }
     }

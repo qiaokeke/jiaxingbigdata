@@ -139,8 +139,9 @@
                     <div id="right-top" class="set-height"></div>
                     <!-- 右边中部 -->
                     <div id="right-middle" class="set-height">
-                        <h3 style="margin-left: 40px;margin-top: 20px;">数据集中器在线数量: 4</h3>
-                        <h3 style="margin-left: 40px;margin-top: 20px;">智能硬件在线数量:   10</h3>
+                        <h5 style="margin-left: 0;margin-top: 0;">数据集中器在线数量: 4</h5>
+                        <h5 style="margin-left: 0;margin-top: 20px;">智能硬件在线数量:   10</h5>
+                        <div id="right-middle-child"></div>
                     </div>
                     <!-- 右边底部 -->
                     <div id="right-bottom" class="set-height"></div>

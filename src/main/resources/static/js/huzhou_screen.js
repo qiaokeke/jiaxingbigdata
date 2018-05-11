@@ -5,6 +5,7 @@ var weChart;
 var bannerPies;
 var dashbord;
 var voltageCurrent;
+var jianFengGuPing;
 
 $(function () {
     $(".wrap").css('height', $(window).height());
@@ -24,7 +25,8 @@ $(function () {
     showWE();
     getCoal();
     getConsumptionSort();
-    getConsumptionTop5()
+    getConsumptionTop5();
+    jianFengGuPing();
 
     /*窗口变化时重绘*/
     var reset = setTimeout(function () {
@@ -35,6 +37,7 @@ $(function () {
             dashbord.resize();
             bannerPies.resize();
             weChart.resize();
+            jianFengGuPing.resize();
         }
     }, 200)
 })
@@ -848,6 +851,90 @@ function createDashboardC() {
  }
  */
 
+//尖峰谷平能耗饼图
+function jianFengGuPing() {
+    jianFengGuPing = echarts.init(document.getElementById('right-middle-child'));
+    jianFengGuPing.showLoading();
+    jianFengGuOption = {
+        title : {
+            text: '雅莹集团尖峰谷电能耗',
+            textStyle: {
+                color: "white"
+            }
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'right',
+            data: ['尖能耗','峰能耗','谷能耗'],
+            textStyle: {
+                color: 'white',
+                fontSize: 12
+            }
+        },
+        series : [
+            {
+                name: '尖峰谷',
+                type: 'pie',
+                radius : '70%',
+                center: ['50%', '60%'],
+                label: {
+                    normal: {
+                        show: false
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {value:310, name:'尖能耗'},
+                    {value:234, name:'峰能耗'},
+                    {value:135, name:'谷能耗'}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    jianFengGuPing.hideLoading();
+    jianFengGuPing.setOption(jianFengGuOption);
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: '/jx/api/ydayZJFPGView?companyCode=1',
+        success: function (myJson) {
+            jianFengGuPing.hideLoading();
+            jianFengGuPing.setOption({
+                title: {
+                    text: '雅莹集团尖峰谷电能耗',
+                    textStyle: {
+                        color: "white"
+                    }
+                },
+                series: [{
+                    data:[
+                        {value:myJson.zxygdnJ, name:'尖能耗'},
+                        {value:myJson.zxygdnF, name:'峰能耗'},
+                        {value:myJson.zxygdnG, name:'谷能耗'}
+                    ]
+                }
+                ]
+            });
+        },
+        error: function () {
+            console.log("尖峰谷能耗json信息读取失败");
+        }
+    });
+}
+
 //厂房轮播参数
 var comList = ['1', '2', '3'];
 var comNameList = ["雅莹集团","亮兮柯电气有限公司","捷顺旅游制品有限公司"];
@@ -873,6 +960,7 @@ function showWE() {
                 color: "white"
             }
         },
+        color: ['#FF3333', '#0087D3', '#89C322','red','red'],
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -950,6 +1038,7 @@ function showWE() {
         weChart = echarts.init(document.getElementById('center-middle'));
         //        请求路径
         var setUrl = "/jx/api/hoursViews?companyCode=" + comList[comIndex];
+        var setJianFengGuUrl = '/jx/api/ydayZJFPGView?companyCode='+comList[comIndex];
         $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -980,6 +1069,33 @@ function showWE() {
             },
             error: function () {
                 console.log("厂房轮播json信息读取失败");
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: setJianFengGuUrl,
+            success: function (myJson) {
+                jianFengGuPing.hideLoading();
+                jianFengGuPing.setOption({
+                    title: {
+                        text: comNameList[comIndex] + '尖峰谷电能耗',
+                        textStyle: {
+                            color: "white"
+                        }
+                    },
+                    series: [{
+                        data:[
+                            {value:myJson.zxygdnJ, name:'尖能耗'},
+                            {value:myJson.zxygdnF, name:'峰能耗'},
+                            {value:myJson.zxygdnG, name:'谷能耗'}
+                        ]
+                    }
+                    ]
+                });
+            },
+            error: function () {
+                console.log("尖峰谷能耗json信息读取失败");
             }
         });
     }

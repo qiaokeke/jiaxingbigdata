@@ -1,7 +1,9 @@
 package cn.zjn.jx.bigdata.dao.company;
 
 import cn.zjn.jx.bigdata.domain.company.CompanyInfo;
+import cn.zjn.jx.bigdata.domain.power.PowerMeterInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -21,7 +23,19 @@ public interface CompanyDao {
             "company_info.company_name AS companyName\n" +
             "FROM\n" +
             "company_info\n"})
+
     public List<CompanyInfo> selectCompanyInfos();
 
+
+    @Select({"SELECT\n" +
+            "power_meter_info.meter_code AS pCode,\n" +
+            "power_meter_info.meter_name AS pName,\n" +
+            "power_meter_info.beiLv AS beiLv\n" +
+            "FROM\n" +
+            "power_meter_info\n" +
+            "WHERE\n" +
+            "power_meter_info.company_code=#{companyCode}"
+    })
+    public List<PowerMeterInfo> selectPowerMeterInfosByCompanyCode(@Param("companyCode") String companyCode);
 
 }

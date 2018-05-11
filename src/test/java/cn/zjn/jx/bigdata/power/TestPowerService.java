@@ -1,7 +1,6 @@
 package cn.zjn.jx.bigdata.power;
 
-import cn.zjn.jx.bigdata.domain.power.PowerMeterZXYGDNRecordView;
-import cn.zjn.jx.bigdata.domain.power.PowerZJFPGView;
+import cn.zjn.jx.bigdata.domain.power.*;
 import cn.zjn.jx.bigdata.service.pwoer.PowerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,5 +45,11 @@ public class TestPowerService {
             logger.info(view.toString());
     }
 
+    @Test
+    public void testPowerDayViews(){
+        List<PowerZXYGDNView>  views = powerService.selectTswkPowerZXYGDNViewsByCompanyCodeOrpCode("1","0");
+        for (PowerZXYGDNView view : views)
+            logger.info(view.toString());
+    }
 
 }
