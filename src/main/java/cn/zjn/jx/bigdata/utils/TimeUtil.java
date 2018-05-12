@@ -2,6 +2,7 @@ package cn.zjn.jx.bigdata.utils;
 
 import cn.zjn.jx.bigdata.utils.domain.TswkDate;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +25,15 @@ public class TimeUtil {
     //返回去年的12月
     public static String YearSTimeString;
     public static String YearETimeString;
+
+    //当天日期
+    public static String TDaySTimeString;
+    public static String TDayETimeString;
+
+
+    //当月日期
+    public static String TsMonthSTimeString;
+    public static String TsMonthETimeString;
 
     static {
 
@@ -49,9 +59,52 @@ public class TimeUtil {
         YearETimeString = new SimpleDateFormat(formatter).format(new Date(new Date().getTime()+24*60*60*1000));
 
 
+        //月份设置
+        calendar.setTime(new Date());
+        year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        calendar.clear();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH,month);
+        TsMonthSTimeString = new SimpleDateFormat(formatter).format(new Date(calendar.getTime().getTime()-24*60*60*1000));
+        TsMonthETimeString = new SimpleDateFormat(formatter).format(new Date(new Date().getTime()+24*60*60*1000));
+
+
+        //设置当天查询的起始时间
+        TDaySTimeString = new SimpleDateFormat(formatter).format(new Date(new Date().getTime()));
+        TDayETimeString = new SimpleDateFormat(formatter).format(new Date(new Date().getTime()+24*60*60*1000));
 
     }
 
+    //根据给定时间字符串，增加一天
+    public static String addOneDay(String sTime) throws ParseException {
+        String formatter = "yyyy-MM-dd";
+        Date sDate = new SimpleDateFormat(formatter).parse(sTime);
+        Date eDate = new Date(sDate.getTime()+24*60*60*1000);
+        String eTime = new SimpleDateFormat(formatter).format(eDate);
+        return eTime;
+    }
+
+
+    //根据给定时间字符串，减少一天
+    public static String subOneDay(String sTime) throws ParseException {
+        String formatter = "yyyy-MM-dd";
+        Date sDate = new SimpleDateFormat(formatter).parse(sTime);
+        Date eDate = new Date(sDate.getTime()-24*60*60*1000);
+        String eTime = new SimpleDateFormat(formatter).format(eDate);
+        return eTime;
+    }
+
+    //根据给定时间字符串，增加一个月
+    public static String addOneMonth(String sTime) throws ParseException {
+        String formatter = "yyyy-MM-dd";
+        Date sDate = new SimpleDateFormat(formatter).parse(sTime);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(sDate);
+        calendar.add(Calendar.MONTH,1);
+        String eTime = new SimpleDateFormat(formatter).format(calendar.getTime());
+        return eTime;
+    }
 
 
     /**

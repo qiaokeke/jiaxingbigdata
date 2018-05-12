@@ -11,6 +11,7 @@ import cn.zjn.jx.bigdata.utils.domain.TswkDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -192,13 +193,13 @@ public class PowerServiceImpl implements PowerService {
      * @return
      */
     @Override
-    public List<PowerZXYGDNView> selectTswkPowerZXYGDNViewsByCompanyCodeOrpCode(String companyCode, String pCode) {
+    public List<PowerZXYGDNView> selectTswkPowerZXYGDNDayViewsByCompanyCodeOrPCode(String companyCode, String pCode) {
         List<PowerZXYGDNInfo> infos ;
         TswkDate tswkDate = TimeUtil.getTswkDateFormat();
         if (pCode.equals("0"))
-            infos = powerDao.selectPowerZXYGDNDayInfosBycompanyCodeAndTime(companyCode, tswkDate.getFirstDateString(),tswkDate.getEndDateString());
+            infos = powerDao.selectPowerZXYGDNDayInfosByCompanyCodeAndTime(companyCode, tswkDate.getFirstDateString(),tswkDate.getEndDateString());
         else
-            infos = powerDao.selectPowerZXYGDNDayInfosBypCodeAndTime(pCode,tswkDate.getFirstDateString(),tswkDate.getEndDateString());
+            infos = powerDao.selectPowerZXYGDNDayInfosByPCodeAndTime(pCode,tswkDate.getFirstDateString(),tswkDate.getEndDateString());
         List<PowerZXYGDNView> views ;
         views = MergeUtil.mergeZXYGDNInfos2Views(infos);
         SubValueUtil.subValueOfPowerZXYGDNViews(views);
@@ -206,16 +207,116 @@ public class PowerServiceImpl implements PowerService {
     }
 
     @Override
-    public List<PowerZXYGDNView> selectYearPowerZXYGDNViewsByCompanyCodeOrpCode(String companyCode, String pCode) {
+    public List<PowerZXYGDNView> selectYearPowerZXYGDNMonthViewsByCompanyCodeOrPCode(String companyCode, String pCode) {
         List<PowerZXYGDNInfo> infos ;
 
         if (pCode.equals("0"))
             infos = powerDao.selectPowerZXYGDNMonthInfosBycompanyCodeAndTime(companyCode,TimeUtil.YearSTimeString,TimeUtil.YearETimeString);
         else
-            infos = powerDao.selectPowerZXYGDNMonthInfosBypCodeAndTime(pCode,TimeUtil.YearSTimeString,TimeUtil.YearETimeString);
+            infos = powerDao.selectPowerZXYGDNMonthInfosByPCodeAndTime(pCode,TimeUtil.YearSTimeString,TimeUtil.YearETimeString);
         List<PowerZXYGDNView> views;
         views = MergeUtil.mergeZXYGDNInfos2Views(infos);
         SubValueUtil.subValueOfPowerZXYGDNViews(views);
+        return views;
+    }
+
+    @Override
+    public List<PowerZXYGDNView> selectTsMonthPowerZXYGDNDayViewsByCompanyCodeOrPCode(String companyCode, String pCode) {
+        List<PowerZXYGDNInfo> infos ;
+        System.out.println(TimeUtil.TsMonthSTimeString);
+        if (pCode.equals("0"))
+            infos = powerDao.selectPowerZXYGDNDayInfosByCompanyCodeAndTime(companyCode,TimeUtil.TsMonthSTimeString,TimeUtil.TsMonthETimeString);
+        else
+            infos = powerDao.selectPowerZXYGDNDayInfosByPCodeAndTime(pCode,TimeUtil.TsMonthSTimeString,TimeUtil.TsMonthETimeString);
+        List<PowerZXYGDNView> views;
+        views = MergeUtil.mergeZXYGDNInfos2Views(infos);
+        SubValueUtil.subValueOfPowerZXYGDNViews(views);
+        return views;
+    }
+
+    @Override
+    public List<PowerZXYGDNView> selectTDayPowerZXYGDNHourViewsByCompanyCodeOrPCode(String companyCode, String pCode) {
+        List<PowerZXYGDNInfo> infos ;
+
+        if (pCode.equals("0"))
+            infos = powerDao.selectPowerZXYGDNHoursInfosByCompanyCodeAndTime(companyCode,TimeUtil.TDaySTimeString,TimeUtil.TDayETimeString);
+        else
+            infos = powerDao.selectPowerZXYGDNHoursInfosByPCodeAndTime(pCode,TimeUtil.TDaySTimeString,TimeUtil.TDayETimeString);
+        List<PowerZXYGDNView> views;
+        views = MergeUtil.mergeZXYGDNInfos2Views(infos);
+        SubValueUtil.subValueOfPowerZXYGDNViews(views);
+        return views;
+
+}
+
+    @Override
+    public List<PowerZXYGDNView> selectDayPowerZXYGDNHourViewsByCompanyCodeOrPCodeAndTime(String companyCode, String pCode, String time) {
+        List<PowerZXYGDNInfo> infos ;
+
+        if (pCode.equals("0"))
+            try {
+                infos = powerDao.selectPowerZXYGDNHoursInfosByCompanyCodeAndTime(companyCode,time,TimeUtil.addOneDay(time));
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        else
+            infos = powerDao.selectPowerZXYGDNHoursInfosByPCodeAndTime(pCode,TimeUtil.TDaySTimeString,TimeUtil.TDayETimeString);
+        List<PowerZXYGDNView> views;
+        views = MergeUtil.mergeZXYGDNInfos2Views(infos);
+        SubValueUtil.subValueOfPowerZXYGDNViews(views);
+        return views;
+    }
+
+    @Override
+    public List<PowerZXYGDNView> selectTswkPowerZXYGDNHourViewsByCompanyCodeOrPCode(String companyCode, String pCode) {
+
+        List<PowerZXYGDNInfo> infos = new ArrayList<>();
+        try {
+            if (pCode.equals("0"))
+                infos = powerDao.selectPowerZXYGDNHoursInfosByCompanyCodeAndTime(companyCode,TimeUtil.addOneDay(TimeUtil.TswkSTimeString),TimeUtil.TswkETimeString);
+            else
+                infos = powerDao.selectPowerZXYGDNHoursInfosByPCodeAndTime(pCode,TimeUtil.addOneDay(TimeUtil.TswkSTimeString),TimeUtil.TswkETimeString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        List<PowerZXYGDNView> views;
+        views = MergeUtil.mergeZXYGDNInfos2Views(infos);
+        SubValueUtil.subValueOfPowerZXYGDNViews(views);
+        return views;
+    }
+
+    @Override
+    public List<PowerZJFPGView> selectMonthPowerZJFPGDayViwesByCompanyCodeOrPCode(String companyCode, String pCode) {
+        List<PowerZJFPGInfo> infos = null;
+        if (pCode.equals("0"))
+            infos = powerDao.selectPowerZJFPGDayInfosByCompanyCodeAndTime(companyCode,TimeUtil.TswkSTimeString,TimeUtil.TswkETimeString);
+        else
+            infos = powerDao.selectPowerZJFPGDayInfosByPCodeAndTime(pCode,TimeUtil.TswkSTimeString,TimeUtil.TswkETimeString);
+
+        List<PowerZJFPGView> views;
+        views = MergeUtil.mergeZJFPGInfos2Views(infos);
+        SubValueUtil.subValueOfPowerZJFPGViews(views);
+
+        return views;
+    }
+
+    @Override
+    public List<PowerZJFPGView> selectMonthPowerZJFPGDayViwesByCompanyCodeOrPCodeAndTime(String companyCode, String pCode, String time) {
+        List<PowerZJFPGInfo> infos = new ArrayList<>();
+
+        try {
+            if (pCode.equals("0"))
+            infos = powerDao.selectPowerZJFPGDayInfosByCompanyCodeAndTime(companyCode,TimeUtil.subOneDay(time),TimeUtil.addOneMonth(time));
+            else
+                infos = powerDao.selectPowerZJFPGDayInfosByPCodeAndTime(pCode,TimeUtil.subOneDay(time),TimeUtil.addOneMonth(time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        List<PowerZJFPGView> views;
+        views = MergeUtil.mergeZJFPGInfos2Views(infos);
+        SubValueUtil.subValueOfPowerZJFPGViews(views);
+
         return views;
     }
 

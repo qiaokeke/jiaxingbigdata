@@ -1,5 +1,7 @@
 package cn.zjn.jx.bigdata.domain.power;
 
+import java.io.Serializable;
+
 /**
  * @Author: qiao
  * @Description:
@@ -7,8 +9,12 @@ package cn.zjn.jx.bigdata.domain.power;
  * @Modified By:
  * @Email: qiaokekeshu@163.com
  */
-public class PowerZJFPGInfo {
+public class PowerZJFPGInfo implements Serializable{
+
+    private static final long serialVersionUID=1L;
+
     String pCode;
+    int beiLv;
     String time;
     float zxygdnZ;
     float zxygdnJ;
@@ -19,8 +25,9 @@ public class PowerZJFPGInfo {
     public PowerZJFPGInfo() {
     }
 
-    public PowerZJFPGInfo(String pCode, String time, float zxygdnZ, float zxygdnJ, float zxygdnF, float zxygdnP, float zxygdnG) {
+    public PowerZJFPGInfo(String pCode, int beiLv, String time, float zxygdnZ, float zxygdnJ, float zxygdnF, float zxygdnP, float zxygdnG) {
         this.pCode = pCode;
+        this.beiLv = beiLv;
         this.time = time;
         this.zxygdnZ = zxygdnZ;
         this.zxygdnJ = zxygdnJ;
@@ -37,6 +44,14 @@ public class PowerZJFPGInfo {
         this.pCode = pCode;
     }
 
+    public int getBeiLv() {
+        return beiLv;
+    }
+
+    public void setBeiLv(int beiLv) {
+        this.beiLv = beiLv;
+    }
+
     public String getTime() {
         return time;
     }
@@ -46,7 +61,7 @@ public class PowerZJFPGInfo {
     }
 
     public float getZxygdnZ() {
-        return zxygdnZ;
+        return zxygdnZ*this.beiLv;
     }
 
     public void setZxygdnZ(float zxygdnZ) {
@@ -54,7 +69,7 @@ public class PowerZJFPGInfo {
     }
 
     public float getZxygdnJ() {
-        return zxygdnJ;
+        return zxygdnJ*this.beiLv;
     }
 
     public void setZxygdnJ(float zxygdnJ) {
@@ -62,7 +77,7 @@ public class PowerZJFPGInfo {
     }
 
     public float getZxygdnF() {
-        return zxygdnF;
+        return zxygdnF*this.beiLv;
     }
 
     public void setZxygdnF(float zxygdnF) {
@@ -70,7 +85,7 @@ public class PowerZJFPGInfo {
     }
 
     public float getZxygdnP() {
-        return zxygdnP;
+        return zxygdnP*this.beiLv;
     }
 
     public void setZxygdnP(float zxygdnP) {
@@ -78,7 +93,7 @@ public class PowerZJFPGInfo {
     }
 
     public float getZxygdnG() {
-        return zxygdnG;
+        return zxygdnG*this.beiLv;
     }
 
     public void setZxygdnG(float zxygdnG) {
@@ -89,12 +104,13 @@ public class PowerZJFPGInfo {
     public String toString() {
         return "PowerZJFPGInfo{" +
                 "pCode='" + pCode + '\'' +
+                ", beiLv=" + beiLv +
                 ", time='" + time + '\'' +
-                ", zxygdnZ='" + zxygdnZ + '\'' +
-                ", zxygdnJ='" + zxygdnJ + '\'' +
-                ", zxygdnF='" + zxygdnF + '\'' +
-                ", zxygdnP='" + zxygdnP + '\'' +
-                ", zxygdnG='" + zxygdnG + '\'' +
+                ", zxygdnZ=" + zxygdnZ +
+                ", zxygdnJ=" + zxygdnJ +
+                ", zxygdnF=" + zxygdnF +
+                ", zxygdnP=" + zxygdnP +
+                ", zxygdnG=" + zxygdnG +
                 '}';
     }
 }

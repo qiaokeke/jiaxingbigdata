@@ -49,6 +49,8 @@ public class PowerApi {
         return powerService.selectPowerZXYGDNHousrViews(companyCode);
     }
 
+
+
     @RequestMapping("/tswkZJFPGViews")
     public List<PowerZJFPGView> getTswkZJFPGViews(@RequestParam("companyCode")String companyCode,@RequestParam("pCode") String pCode){
         //logger.info(pCode);
@@ -58,12 +60,27 @@ public class PowerApi {
     @RequestMapping("/tswkZXYGDNViews")
     public List<PowerZXYGDNView> getTswkZXYGDNViews(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode){
         //logger.info(pCode);
-        return powerService.selectTswkPowerZXYGDNViewsByCompanyCodeOrpCode(companyCode,pCode);
+        return powerService.selectTswkPowerZXYGDNDayViewsByCompanyCodeOrPCode(companyCode,pCode);
     }
 
-    @RequestMapping("/yearZXYGDNViews")
-    public List<PowerZXYGDNView> getYearZXYGDNViews(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode){
-        return powerService.selectYearPowerZXYGDNViewsByCompanyCodeOrpCode(companyCode,pCode);
+    @RequestMapping("/yearZXYGDNMonthViews")
+    public List<PowerZXYGDNView> getYearZXYGDNMonthViews(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode){
+        return powerService.selectYearPowerZXYGDNMonthViewsByCompanyCodeOrPCode(companyCode,pCode);
+    }
+
+    @RequestMapping("/tDayZXYGDNHourViews")
+    public List<PowerZXYGDNView> getTDayZXYGDNViews(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode){
+        return powerService.selectTDayPowerZXYGDNHourViewsByCompanyCodeOrPCode(companyCode,pCode);
+    }
+
+    @RequestMapping("/dayZXYGDNHourViews")
+    public List<PowerZXYGDNView> getDayZXYGDNViewsByTime(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode,@RequestParam("time") String time){
+        return powerService.selectDayPowerZXYGDNHourViewsByCompanyCodeOrPCodeAndTime(companyCode,pCode,time);
+    }
+
+    @RequestMapping("/tsMonthZXYGDNDayViews")
+    public List<PowerZXYGDNView> gtTsMonthZXYGDNDayViews(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode){
+        return powerService.selectTsMonthPowerZXYGDNDayViewsByCompanyCodeOrPCode(companyCode,pCode);
     }
 
     @RequestMapping("/ydayZJFPGView")
@@ -72,9 +89,13 @@ public class PowerApi {
     }
 
 
+    @RequestMapping("/tswkZXYGDNHourViews")
+    public List<PowerZXYGDNView> getTswkZXYGDNHourViews(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode){
+        return powerService.selectTswkPowerZXYGDNHourViewsByCompanyCodeOrPCode(companyCode,pCode);
+    }
 
-
-
-
-
+    @RequestMapping("/monthZJFPGDayViews")
+    public List<PowerZJFPGView> getTsMonthZJFPGDayViewsByTime(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode,@RequestParam("time") String time){
+        return powerService.selectMonthPowerZJFPGDayViwesByCompanyCodeOrPCodeAndTime(companyCode,pCode,time);
+    }
 }

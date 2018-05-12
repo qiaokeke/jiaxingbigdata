@@ -47,9 +47,18 @@ public class TestPowerService {
 
     @Test
     public void testPowerDayViews(){
-        List<PowerZXYGDNView>  views = powerService.selectTswkPowerZXYGDNViewsByCompanyCodeOrpCode("1","0");
+        List<PowerZXYGDNView>  views = powerService.selectTswkPowerZXYGDNDayViewsByCompanyCodeOrPCode("1","0");
         for (PowerZXYGDNView view : views)
             logger.info(view.toString());
     }
+
+    @Test
+    public void testPowerTDAYViews(){
+        List<PowerZXYGDNView>  views = powerService.selectTDayPowerZXYGDNHourViewsByCompanyCodeOrPCode("2","0");
+        for (PowerZXYGDNView view : views)
+            logger.info(view.toString());
+    }
+
+
 
 }

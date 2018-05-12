@@ -69,7 +69,7 @@ public class TestPowerDao {
     public void testSelectDayinfos(){
 
         TswkDate tswkDate = TimeUtil.getTswkDateFormat();
-        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNDayInfosBypCodeAndTime("65381",TimeUtil.TswkSTimeString,TimeUtil.TswkETimeString);
+        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNDayInfosByPCodeAndTime("65381",TimeUtil.TswkSTimeString,TimeUtil.TswkETimeString);
 
         for (PowerZXYGDNInfo info:infos)
             System.out.println(info);
@@ -79,7 +79,7 @@ public class TestPowerDao {
     public void testSelectDayinfosbyCompanycode(){
 
         TswkDate tswkDate = TimeUtil.getTswkDateFormat();
-        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNDayInfosBycompanyCodeAndTime("1",tswkDate.getFirstDateString(),tswkDate.getEndDateString());
+        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNDayInfosByCompanyCodeAndTime("1",tswkDate.getFirstDateString(),tswkDate.getEndDateString());
 
         for (PowerZXYGDNInfo info:infos)
             System.out.println(info);
@@ -96,12 +96,48 @@ public class TestPowerDao {
     @Test
     public void testSelectMonthInfosbyPcode(){
         System.out.println(TimeUtil.YearSTimeString+"  "+ TimeUtil.YearETimeString);
-        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNMonthInfosBypCodeAndTime("65381",TimeUtil.YearSTimeString,TimeUtil.YearETimeString);
+        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNMonthInfosByPCodeAndTime("65381",TimeUtil.YearSTimeString,TimeUtil.YearETimeString);
 
 
         for (PowerZXYGDNInfo info:infos)
             System.out.println(info);
     }
+
+    @Test
+    public void testSelectHourInfosbyPcode(){
+        System.out.println(TimeUtil.TDaySTimeString+"  "+ TimeUtil.TDayETimeString);
+        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNHoursInfosByPCodeAndTime("65340",TimeUtil.TDaySTimeString,TimeUtil.TDayETimeString);
+        for (PowerZXYGDNInfo info:infos)
+            System.out.println(info);
+    }
+
+    @Test
+    public void testSelectHourInfosbyComcode(){
+        System.out.println(TimeUtil.TDaySTimeString+"  "+ TimeUtil.TDayETimeString);
+        List<PowerZXYGDNInfo> infos = powerDao.selectPowerZXYGDNHoursInfosByCompanyCodeAndTime("1",TimeUtil.TDaySTimeString,TimeUtil.TDayETimeString);
+        for (PowerZXYGDNInfo info:infos)
+            System.out.println(info);
+    }
+
+    @Test
+    public void testSelectDayZJFInfosbyComcode(){
+        System.out.println(TimeUtil.TDaySTimeString+"  "+ TimeUtil.TDayETimeString);
+        List<PowerZJFPGInfo> infos = powerDao.selectPowerZJFPGDayInfosByCompanyCodeAndTime("1",TimeUtil.TswkSTimeString,TimeUtil.TswkETimeString);
+        for (PowerZJFPGInfo info:infos)
+            System.out.println(info);
+        List<PowerZJFPGInfo> infos2 = powerDao.selectPowerZJFPGDayInfosByPCodeAndTime("65381",TimeUtil.TswkSTimeString,TimeUtil.TswkETimeString);
+        for (PowerZJFPGInfo info:infos2)
+            System.out.println(info);
+    }
+
+    @Test
+    public void testTimeUtil(){
+        System.out.println(TimeUtil.TsMonthSTimeString);
+        System.out.println(TimeUtil.TsMonthETimeString);
+    }
+
+
+
 
 
 }

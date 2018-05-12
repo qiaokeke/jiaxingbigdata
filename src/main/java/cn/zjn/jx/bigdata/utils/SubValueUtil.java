@@ -43,7 +43,8 @@ public class SubValueUtil {
                 subValue=0;
             views.get(i).setZXYGDN(subValue);
         }
-        views.get(0).setZXYGDN(0);
+        //views.get(0).setZXYGDN(0);
+        views.remove(0);
     }
 
 
@@ -74,9 +75,5 @@ public class SubValueUtil {
         }
        views.remove(0);
     }
-
-
-
-
 
 }

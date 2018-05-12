@@ -13,7 +13,8 @@
   </resultMap>
     <resultMap id="dayInfo" type="cn.zjn.jx.bigdata.domain.power.PowerZXYGDNInfo"/>
     <resultMap id="monthInfo" type="cn.zjn.jx.bigdata.domain.power.PowerZXYGDNInfo"/>
-
+    <resultMap id="hourInfo" type="cn.zjn.jx.bigdata.domain.power.PowerZXYGDNInfo"/>
+    <resultMap id="dayZJFPGInfo" type="cn.zjn.jx.bigdata.domain.power.PowerZJFPGInfo"/>
 
 
     <select id="selectPowerZXYGDNRecordInfos" resultMap="BaseResultMap" useCache="true">
@@ -29,7 +30,7 @@
      companyCode
   </select>
 
-   <select id="selectPowerZXYGDNDayInfosBypCodeAndTime" resultMap="dayInfo" useCache="true">
+   <select id="selectPowerZXYGDNDayInfosByPCodeAndTime" resultMap="dayInfo" useCache="true">
         SELECT
             DATE_FORMAT(
                 power_meter_record.p_time,
@@ -59,7 +60,7 @@
 
    </select>
 
-    <select id="selectPowerZXYGDNDayInfosBycompanyCodeAndTime" resultMap="dayInfo"  useCache="true">
+    <select id="selectPowerZXYGDNDayInfosByCompanyCodeAndTime" resultMap="dayInfo" useCache="true">
         SELECT
             DATE_FORMAT(
                 power_meter_record.p_time,
@@ -83,6 +84,8 @@
                 p_time BETWEEN #{sTime}
             AND #{eTime}
             GROUP BY
+                Year(power_meter_record.p_time),
+                Month(power_meter_record.p_time),
                 DAY (power_meter_record.p_time),
                 power_meter_record.p_code
         )
@@ -90,7 +93,7 @@
     </select>
 
 
-    <select id="selectPowerZXYGDNMonthInfosBypCodeAndTime" resultMap="monthInfo" useCache="true">
+    <select id="selectPowerZXYGDNMonthInfosByPCodeAndTime" resultMap="monthInfo" useCache="true">
         SELECT
             DATE_FORMAT(
                 power_meter_record.p_time,
@@ -148,5 +151,149 @@
         )
         AND power_meter_info.meter_code = power_meter_record.p_code
     </select>
+
+
+    <select id="selectPowerZXYGDNHoursInfosByCompanyCodeAndTime" resultMap="hourInfo" useCache="true">
+          SELECT
+            DATE_FORMAT(
+                power_meter_record.p_time,
+                '%Y-%m-%d %H:00:00'
+            ) AS time,
+            power_meter_record.p_code AS pCode,
+            power_meter_info.beilv AS beiLv,
+            power_meter_record.p_zxygdn AS ZXYGDN
+        FROM
+            power_meter_record,
+            power_meter_info
+        WHERE
+            power_meter_info.company_code = #{companyCode}
+        AND power_meter_info.meter_code = power_meter_record.p_code
+        AND power_meter_record.id IN (
+            SELECT
+                max(id)
+            FROM
+                power_meter_record
+            WHERE
+                p_time BETWEEN #{sTime}
+            AND #{eTime}
+            GROUP BY
+                YEAR (power_meter_record.p_time),
+                MONTH (power_meter_record.p_time),
+                DAY (power_meter_record.p_time),
+                HOUR (power_meter_record.p_time),
+                power_meter_record.p_code
+        )
+        AND power_meter_info.meter_code = power_meter_record.p_code
+
+
+    </select>
+
+    <select id="selectPowerZXYGDNHoursInfosByPCodeAndTime" resultMap="hourInfo" useCache="true">
+        SELECT
+            DATE_FORMAT(
+                power_meter_record.p_time,
+                '%Y-%m-%d %H:00:00'
+            ) AS time,
+            power_meter_info.beilv AS beiLv,
+            power_meter_record.p_code AS pCode,
+            power_meter_record.p_zxygdn AS ZXYGDN
+        FROM
+            power_meter_record,
+            power_meter_info
+        WHERE
+            power_meter_record.id IN (
+                SELECT
+                    max(id)
+                FROM
+                    power_meter_record
+                WHERE
+                    power_meter_record.p_code = #{pCode}
+                AND p_time BETWEEN #{sTime}
+                AND #{eTime}
+                GROUP BY
+                    YEAR (power_meter_record.p_time),
+                    MONTH (power_meter_record.p_time),
+                    DAY (power_meter_record.p_time),
+                    HOUR (power_meter_record.p_time),
+                    power_meter_record.p_code
+            )
+        AND power_meter_record.p_code = power_meter_info.meter_code
+    </select>
+
+    <select id="selectPowerZJFPGDayInfosByCompanyCodeAndTime" resultMap="dayZJFPGInfo" useCache="true">
+        SELECT
+            DATE_FORMAT(
+                power_meter_record.p_time,
+                '%Y-%m-%d'
+            ) AS time,
+           	power_meter_record.p_code AS pCode,
+            power_meter_info.beilv AS beiLv,
+            power_meter_record.p_zxygdn AS zxygdnZ,
+            power_meter_record.p_zxygdn_1 AS zxygdnJ,
+            power_meter_record.p_zxygdn_2 AS zxygdnF,
+            power_meter_record.p_zxygdn_3 AS zxygdP,
+            power_meter_record.p_zxygdn_4 AS zxygdnG
+        FROM
+            power_meter_record,
+            power_meter_info
+        WHERE
+            power_meter_info.company_code = #{companyCode}
+        AND power_meter_info.meter_code = power_meter_record.p_code
+        AND power_meter_record.id IN (
+            SELECT
+                max(id)
+            FROM
+                power_meter_record
+            WHERE
+                p_time BETWEEN #{sTime}
+            AND #{eTime}
+            GROUP BY
+                YEAR(power_meter_record.p_time),
+                MONTH(power_meter_record.p_time),
+                DAY (power_meter_record.p_time),
+                power_meter_record.p_code
+        )
+        AND power_meter_info.meter_code = power_meter_record.p_code
+
+
+    </select>
+
+
+    <select id="selectPowerZJFPGDayInfosByPCodeAndTime" resultMap="dayZJFPGInfo" useCache="true">
+        SELECT
+            DATE_FORMAT(
+                power_meter_record.p_time,
+                '%Y-%m-%d'
+            ) AS time,
+            power_meter_record.p_code AS pCode,
+            power_meter_info.beilv AS beiLv,
+            power_meter_record.p_zxygdn AS zxygdnZ,
+            power_meter_record.p_zxygdn_1 AS zxygdnJ,
+            power_meter_record.p_zxygdn_2 AS zxygdnF,
+            power_meter_record.p_zxygdn_3 AS zxygdP,
+            power_meter_record.p_zxygdn_4 AS zxygdnG
+        FROM
+            power_meter_record,
+            power_meter_info
+        WHERE
+            power_meter_record.id IN (
+                SELECT
+                    max(id)
+                FROM
+                    power_meter_record
+                WHERE
+                    power_meter_record.p_code = #{pCode}
+                AND p_time BETWEEN #{sTime}
+                AND #{eTime}
+                GROUP BY
+                    YEAR(power_meter_record.p_time),
+		            MONTH(power_meter_record.p_time),
+                    DAY (power_meter_record.p_time),
+                    power_meter_record.p_code
+            )
+        AND power_meter_info.meter_code = power_meter_record.p_code
+    </select>
+
+
 
 </mapper>

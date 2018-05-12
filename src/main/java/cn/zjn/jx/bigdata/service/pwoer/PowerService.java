@@ -24,8 +24,21 @@ public interface PowerService {
 
     public PowerZJFPGView selectYdayPowerZJFPGViewByCompanyCode(String companyCode);
 
-    public List<PowerZXYGDNView> selectTswkPowerZXYGDNViewsByCompanyCodeOrpCode(String companyCode,String pCode);
 
-    public List<PowerZXYGDNView> selectYearPowerZXYGDNViewsByCompanyCodeOrpCode(String companyCode,String pCode);
+    public List<PowerZXYGDNView> selectTswkPowerZXYGDNDayViewsByCompanyCodeOrPCode(String companyCode, String pCode);
+
+    public List<PowerZXYGDNView> selectYearPowerZXYGDNMonthViewsByCompanyCodeOrPCode(String companyCode, String pCode);
+
+    public List<PowerZXYGDNView> selectTsMonthPowerZXYGDNDayViewsByCompanyCodeOrPCode(String companyCode, String pCode);
+
+    public List<PowerZXYGDNView> selectTDayPowerZXYGDNHourViewsByCompanyCodeOrPCode(String companyCode, String pCode);
+
+    public List<PowerZXYGDNView> selectDayPowerZXYGDNHourViewsByCompanyCodeOrPCodeAndTime(String companyCode, String pCode, String time);
+
+    public List<PowerZXYGDNView> selectTswkPowerZXYGDNHourViewsByCompanyCodeOrPCode(String companyCode, String pCode);
+
+    public List<PowerZJFPGView> selectMonthPowerZJFPGDayViwesByCompanyCodeOrPCode(String companyCode, String pCode);
+
+    public List<PowerZJFPGView> selectMonthPowerZJFPGDayViwesByCompanyCodeOrPCodeAndTime(String companyCode, String pCode,String time);
 
 }

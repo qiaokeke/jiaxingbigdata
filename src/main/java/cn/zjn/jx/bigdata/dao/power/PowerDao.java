@@ -131,12 +131,21 @@ public interface PowerDao {
     public List<PowerMeterInfo> selectPowerMeterInfosByCompanyCode(String companyCode);
 
 
-    public List<PowerZXYGDNInfo> selectPowerZXYGDNDayInfosBypCodeAndTime(@Param("pCode") String pCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
+    public List<PowerZXYGDNInfo> selectPowerZXYGDNDayInfosByPCodeAndTime(@Param("pCode") String pCode, @Param("sTime") String sTime, @Param("eTime") String eTime);
 
-    public List<PowerZXYGDNInfo> selectPowerZXYGDNDayInfosBycompanyCodeAndTime(@Param("companyCode") String companyCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
+    public List<PowerZXYGDNInfo> selectPowerZXYGDNDayInfosByCompanyCodeAndTime(@Param("companyCode") String companyCode, @Param("sTime") String sTime, @Param("eTime") String eTime);
 
 
-    public List<PowerZXYGDNInfo> selectPowerZXYGDNMonthInfosBypCodeAndTime(@Param("pCode") String pCode, @Param("sTime") String sTime, @Param("eTime") String eTime);
+    public List<PowerZXYGDNInfo> selectPowerZXYGDNMonthInfosByPCodeAndTime(@Param("pCode") String pCode, @Param("sTime") String sTime, @Param("eTime") String eTime);
 
     public List<PowerZXYGDNInfo> selectPowerZXYGDNMonthInfosBycompanyCodeAndTime(@Param("companyCode") String companyCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
+
+    public List<PowerZXYGDNInfo> selectPowerZXYGDNHoursInfosByCompanyCodeAndTime(@Param("companyCode") String companyCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
+
+    public List<PowerZXYGDNInfo> selectPowerZXYGDNHoursInfosByPCodeAndTime(@Param("pCode") String pCode, @Param("sTime") String sTime, @Param("eTime") String eTime);
+
+    public List<PowerZJFPGInfo> selectPowerZJFPGDayInfosByCompanyCodeAndTime(@Param("companyCode") String companyCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
+
+    public List<PowerZJFPGInfo> selectPowerZJFPGDayInfosByPCodeAndTime(@Param("pCode") String pCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
+
 }
