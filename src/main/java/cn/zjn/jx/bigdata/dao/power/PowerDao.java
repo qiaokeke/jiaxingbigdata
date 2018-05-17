@@ -1,12 +1,10 @@
 package cn.zjn.jx.bigdata.dao.power;
 
 import cn.zjn.jx.bigdata.domain.power.*;
+import cn.zjn.jx.bigdata.domain.xls.PowerAllView;
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.cache.Cache;
 
 import java.util.List;
-
-import static org.apache.coyote.http11.Constants.a;
 
 /**
  * @Author: qiao
@@ -148,4 +146,5 @@ public interface PowerDao {
 
     public List<PowerZJFPGInfo> selectPowerZJFPGDayInfosByPCodeAndTime(@Param("pCode") String pCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
 
+    public List<PowerAllView> selectPowerAllViews();
 }

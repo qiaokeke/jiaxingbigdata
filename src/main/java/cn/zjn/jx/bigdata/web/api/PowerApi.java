@@ -2,7 +2,9 @@ package cn.zjn.jx.bigdata.web.api;
 
 import cn.zjn.jx.bigdata.domain.power.*;
 import cn.zjn.jx.bigdata.domain.powerandwater.PowerWaterZRecordView;
+import cn.zjn.jx.bigdata.domain.xls.PowerAllView;
 import cn.zjn.jx.bigdata.service.pwoer.PowerService;
+import com.sun.deploy.net.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -89,7 +94,7 @@ public class PowerApi {
     }
 
 
-    @RequestMapping("/tswkZXYGDNHourViews")
+    @RequestMapping("/ ")
     public List<PowerZXYGDNView> getTswkZXYGDNHourViews(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode){
         return powerService.selectTswkPowerZXYGDNHourViewsByCompanyCodeOrPCode(companyCode,pCode);
     }
@@ -97,5 +102,27 @@ public class PowerApi {
     @RequestMapping("/monthZJFPGDayViews")
     public List<PowerZJFPGView> getTsMonthZJFPGDayViewsByTime(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode,@RequestParam("time") String time){
         return powerService.selectMonthPowerZJFPGDayViwesByCompanyCodeOrPCodeAndTime(companyCode,pCode,time);
+    }
+
+    @RequestMapping("/powerAllViews")
+    public List<PowerAllView> getPowerAllViews(){
+
+        return powerService.selectPowerAllViews();
+    }
+
+    @RequestMapping("/downloadPowerAllViews.xls")
+    public void downloadPowerAllViews(HttpServletResponse res){
+        String fileName = "电表数据表";
+        res.setHeader("content-type", "application/octet-stream");
+        res.setContentType("application/octet-stream");
+        res.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+        OutputStream outputStream =null;
+
+        try {
+            powerService.getPowerAllViewsWorkbook().write(res.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

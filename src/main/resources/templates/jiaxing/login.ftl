@@ -91,9 +91,9 @@
                                 <input type="password" name="password" placeholder="密码" class="form-password form-control" id="form-password"/>
                                 <label class="warming-input" id="warming-password">密码输入不正确</label>
                             </div>
-                            <#--<button type="submit" class="btn btn-info" id="login">登录</button>-->
+                            <button type="submit" class="btn btn-info" id="login">登录</button>
                         <#--后台没做登录，临时跳转-->
-                            <a href="indexDnhgl"><button type="button" class="btn btn-info" id="login">登录</button></a>
+                           <!-- <a href="indexDnhgl"><button type="button" class="btn btn-info" id="login">登录</button></a>-->
 
                         </form>
                     </div>

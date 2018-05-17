@@ -2,6 +2,8 @@ package cn.zjn.jx.bigdata.service.pwoer;
 
 import cn.zjn.jx.bigdata.domain.power.*;
 import cn.zjn.jx.bigdata.domain.powerandwater.PowerWaterZRecordView;
+import cn.zjn.jx.bigdata.domain.xls.PowerAllView;
+import org.apache.poi.ss.usermodel.Workbook;
 
 import java.util.List;
 
@@ -41,4 +43,7 @@ public interface PowerService {
 
     public List<PowerZJFPGView> selectMonthPowerZJFPGDayViwesByCompanyCodeOrPCodeAndTime(String companyCode, String pCode,String time);
 
+    public List<PowerAllView> selectPowerAllViews();
+
+    public Workbook getPowerAllViewsWorkbook();
 }

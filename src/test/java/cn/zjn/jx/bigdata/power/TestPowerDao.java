@@ -2,6 +2,8 @@ package cn.zjn.jx.bigdata.power;
 
 import cn.zjn.jx.bigdata.dao.power.PowerDao;
 import cn.zjn.jx.bigdata.domain.power.*;
+import cn.zjn.jx.bigdata.domain.xls.PowerAllView;
+import cn.zjn.jx.bigdata.utils.ExcelUtil;
 import cn.zjn.jx.bigdata.utils.TimeUtil;
 import cn.zjn.jx.bigdata.utils.domain.TswkDate;
 import org.junit.Test;
@@ -136,8 +138,11 @@ public class TestPowerDao {
         System.out.println(TimeUtil.TsMonthETimeString);
     }
 
-
-
-
-
+    @Test
+    public void testPowerXls(){
+        List<PowerAllView> allViews = powerDao.selectPowerAllViews();
+        System.out.println(allViews);
+        ExcelUtil.addIdtoPowerAllViews(allViews);
+        System.out.println(allViews);
+    }
 }

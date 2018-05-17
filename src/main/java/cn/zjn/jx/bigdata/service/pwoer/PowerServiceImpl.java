@@ -4,10 +4,13 @@ import cn.zjn.jx.bigdata.dao.company.CompanyDao;
 import cn.zjn.jx.bigdata.dao.power.PowerDao;
 import cn.zjn.jx.bigdata.domain.power.*;
 import cn.zjn.jx.bigdata.domain.powerandwater.PowerWaterZRecordView;
+import cn.zjn.jx.bigdata.domain.xls.PowerAllView;
+import cn.zjn.jx.bigdata.utils.ExcelUtil;
 import cn.zjn.jx.bigdata.utils.MergeUtil;
 import cn.zjn.jx.bigdata.utils.SubValueUtil;
 import cn.zjn.jx.bigdata.utils.TimeUtil;
 import cn.zjn.jx.bigdata.utils.domain.TswkDate;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -318,6 +321,21 @@ public class PowerServiceImpl implements PowerService {
         SubValueUtil.subValueOfPowerZJFPGViews(views);
 
         return views;
+    }
+
+    @Override
+    public List<PowerAllView> selectPowerAllViews() {
+
+        List<PowerAllView> allViews = powerDao.selectPowerAllViews();
+        ExcelUtil.addIdtoPowerAllViews(allViews);
+        return allViews;
+    }
+
+    @Override
+    public Workbook getPowerAllViewsWorkbook() {
+        List<PowerAllView> views = powerDao.selectPowerAllViews();
+        ExcelUtil.addIdtoPowerAllViews(views);
+        return ExcelUtil.getPowerAllViewsXls(views);
     }
 
 
