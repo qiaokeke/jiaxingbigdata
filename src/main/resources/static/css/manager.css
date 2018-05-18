@@ -75,6 +75,12 @@ li > a:hover{
 ol.breadcrumb{
   background-color: transparent;
 }
+
+#report-btn{
+  float: right;
+  margin-bottom: 10px;
+}
+
 /*媒体查询*/
 @media screen and (max-width: 768px) {
   div.navbar-collapse{

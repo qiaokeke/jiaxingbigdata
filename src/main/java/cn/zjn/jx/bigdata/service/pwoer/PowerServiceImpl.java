@@ -116,12 +116,17 @@ public class PowerServiceImpl implements PowerService {
 
     @Override
     public List<PowerZJFPGView> selectTswkPowerZJFPGViewsByCompanyCodeOrpCode(String companyCode,String pCode) {
+        System.out.println(companyCode+pCode);
         List<PowerZJFPGInfo> infos = null;
         if (pCode.equals("0"))
-            infos = powerDao.selectPowerZJFPGInfosByCompanyCodeAndTime(companyCode, TimeUtil.getTswkDate().get(1),TimeUtil.getTswkDate().get(2));
+            infos = powerDao.selectPowerZJFPGDayInfosByCompanyCodeAndTime(companyCode,TimeUtil.TswkSTimeString,TimeUtil.TswkETimeString);
         else
-            infos = powerDao.selectPowerZJFPGInfosBypCodeAndTime(pCode,TimeUtil.getTswkDate().get(1),TimeUtil.getTswkDate().get(2));
-        List<PowerZJFPGView> views = new ArrayList<>();
+            infos = powerDao.selectPowerZJFPGDayInfosByPCodeAndTime(pCode,TimeUtil.TswkSTimeString,TimeUtil.TswkETimeString);
+        System.out.println(infos);
+        List<PowerZJFPGView> views = null;
+        views = MergeUtil.mergeZJFPGInfos2Views(infos);
+        SubValueUtil.subValueOfPowerZJFPGViews(views);
+       /**
         for (PowerZJFPGInfo info:infos){
             boolean isAdd = false;
             for(PowerZJFPGView view:views){
@@ -148,7 +153,7 @@ public class PowerServiceImpl implements PowerService {
 
         }
         SubValueUtil.subValueOfPowerZJFPGViews(views);
-
+        **/
         return views;
     }
 

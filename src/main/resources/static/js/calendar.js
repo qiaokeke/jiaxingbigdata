@@ -1,43 +1,36 @@
 var cellSize = [80, 70];
 var pieRadius = '10%';
 // 设定默认日历为当前年月
-var beginMonth,beginYear,endMonth,endYear;
+var beginMonth, beginYear, endMonth, endYear;
 var thisTime = new Date();
 beginMonth = thisTime.getMonth() + 1;
 endYear = beginYear = thisTime.getFullYear();
-if(beginMonth < 9){
-    endMonth = "0"+parseInt(beginMonth+1);
+if (beginMonth < 9) {
+    endMonth = "0" + parseInt(beginMonth + 1);
 
-}else{
+} else {
     endMonth = beginMonth + 1;
 }
-if(beginMonth === 12){
+if (beginMonth === 12) {
     endMonth = "01";
     endYear = beginYear + 1;
 }
-var s = beginYear+"-"+beginMonth+"-01";
-var e = endYear+"-"+endMonth+"-01";
-var yearMonth = [beginYear+'-'+beginMonth];
-var a=0,b=0,c=0;
+var s = beginYear + "-" + beginMonth + "-01";
+var e = endYear + "-" + endMonth + "-01";
+var yearMonth = [beginYear + '-' + beginMonth];
+var a = 0, b = 0, c = 0;
 var myChart = echarts.init(document.getElementById("calendar-container"));
 
-var urlStr =  decodeURI(window.location.href);
-var num = urlStr.indexOf("?");
-urlStr = urlStr.substr(num+1); //取得所有参数
-var pList = urlStr.split("&"); //各个参数放到数组里
-var getP = pList[0].split('=');
-pList[0] = getP[1];
-gufengUrl = '/ssjc/gufengCalendar?aCode='+pList[0]+'&time=2017-12-1';
-
-function printCalendar() {
+function printCalendar(calrndarParamsData) {
 
     /*请求实时数据*/
     $.ajax({
         type: 'GET',
         dataType: "json",
         async: false,
-        url: gufengUrl,
-        success: function(myJson) {
+        url: "/jx/api/monthZJFPGDayViews",
+        data: calrndarParamsData,
+        success: function (myJson) {
             //处理时间,使时间变为天数
             function getDate() {
                 for (var i in myJson) {
@@ -48,6 +41,7 @@ function printCalendar() {
                 }
             };
             getDate();
+
             function getVirtulData(s, e) {
                 var date = +echarts.number.parseDate(s);
                 var end = +echarts.number.parseDate(e);
@@ -63,18 +57,27 @@ function printCalendar() {
             }
 
             function getPieSeries(scatterData, chart) {
-                return echarts.util.map(scatterData, function(item, index) {
+                return echarts.util.map(scatterData, function (item, index) {
                     var center = chart.convertToPixel('calendar', item);
-                    for (var i in myJson) {
-                        if (myJson[i].time == index + 1) {
-                            a = myJson[i].peak; //峰能耗
-                            b = myJson[i].valley; //谷能耗
-                            c = myJson[i].tip; //尖能耗
-                            break;
-                        } else {
+                    //数据为空
+                    if (JSON.stringify(myJson) == '[]') {
+                        for (var i = 0; i < 31; i++) {
                             a = 0;
                             b = 0;
                             c = 0;
+                        }
+                    } else {
+                        for (var i in myJson) {
+                            if (myJson[i].time == index + 1) {
+                                a = myJson[i].zxygdnF; //峰能耗
+                                b = myJson[i].zxygdnG; //谷能耗
+                                c = myJson[i].zxygdnJ; //尖能耗
+                                break;
+                            } else {
+                                a = 0;
+                                b = 0;
+                                c = 0;
+                            }
                         }
                     }
                     return {
@@ -90,9 +93,9 @@ function printCalendar() {
                         },
                         radius: pieRadius,
                         data: [
-                            { name: '尖能耗', value: c },
-                            { name: '峰能耗', value: a },
-                            { name: '谷能耗', value: b }
+                            {name: '尖能耗', value: c},
+                            {name: '峰能耗', value: a},
+                            {name: '谷能耗', value: b}
                         ]
                     };
                 });
@@ -135,7 +138,7 @@ function printCalendar() {
                     label: {
                         normal: {
                             show: true,
-                            formatter: function(params) {
+                            formatter: function (params) {
                                 return echarts.format.formatTime('dd', params.value[0]);
                             },
                             offset: [-cellSize[0] / 2 + 10, -cellSize[1] / 2 + 10],
@@ -152,31 +155,30 @@ function printCalendar() {
             myChart.setOption({
                 series: getPieSeries(scatterData, myChart)
             });
-
-
         },
-        error: function() {
+        error: function () {
             console.log("峰谷能耗日历json信息读取失败");
         }
     });
 }
 
-printCalendar();
-
-var urlStr =  decodeURI(window.location.href);
-var num = urlStr.indexOf("?");
-urlStr = urlStr.substr(num+1); //取得所有参数
-var pList = urlStr.split("&"); //各个参数放到数组里
-var getP = pList[0].split('=');
-pList[0] = getP[1];
-
+var calendarParamsData = {
+    companyCode: 1,
+    pCode: 0,
+    time: s
+};
+printCalendar(calendarParamsData);
 
 //点击查询事件
-$("#findit").click(function() {
-    gufengUrl = '/ssjc/gufengCalendar?aCode='+pList[0]+'&time='+$("#year").val()+"-"+$("#month").val()+"-1";
+$("#findit").click(function () {
     s = $("#year").val() + "-" + $("#month").val() + "-01";
     e = $("#year").val() + "-" + (parseInt($("#month").val()) + 1) + "-01";
-    yearMonth[0] = $("#year").val()+"-"+$("#month").val();
+    yearMonth[0] = $("#year").val() + "-" + $("#month").val();
     myChart.clear();
-    printCalendar();
+    var calendarParamsData = {
+        companyCode: $("#companyNameList").val(),
+        pCode: $("#companyMeterList").val(),
+        time: s
+    };
+    printCalendar(calendarParamsData);
 });

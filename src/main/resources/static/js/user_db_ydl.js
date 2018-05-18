@@ -142,7 +142,11 @@ $(function (){
                 type: 'POST',
                 dataType: 'json',
                 async: true,
-                url: '/analysis/info?aCode='+companyCode,
+                url: "/jx/api/yearZXYGDNMonthViews",
+                data:{
+                    companyCode:companyCode,
+                    pCode:0
+                },
                 success: function(data) {
                     //处理时间
                     for(var p in data){
@@ -151,7 +155,7 @@ $(function (){
                     }
                     //装入数据
                     for (var index in data) {
-                        data_pay[data[index].time - 1] = data[index].electricValue;
+                        data_pay[data[index].time - 1] = data[index].zxygdn;
                     }
                     console.log("用电量："+data_pay);
                     console.log("购电量："+data_buy);

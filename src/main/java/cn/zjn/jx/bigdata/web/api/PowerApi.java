@@ -94,7 +94,7 @@ public class PowerApi {
     }
 
 
-    @RequestMapping("/ ")
+    @RequestMapping("/tswkZXYGDNHourViews")
     public List<PowerZXYGDNView> getTswkZXYGDNHourViews(@RequestParam("companyCode")String companyCode, @RequestParam("pCode") String pCode){
         return powerService.selectTswkPowerZXYGDNHourViewsByCompanyCodeOrPCode(companyCode,pCode);
     }

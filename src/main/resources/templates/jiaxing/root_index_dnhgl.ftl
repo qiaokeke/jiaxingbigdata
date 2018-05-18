@@ -53,23 +53,17 @@
                                 <i class="fa fa-font" aria-hidden="true"></i>
                                 <p>低碳能源平台</p>
                             </div>
-                            <a href="rootSsjcMap">
+                            <a href="rootSsjc">
                                 <h2>实时监测</h2>
                             </a>
                             <a href="rootDb">
                                 <h2>大数据分析</h2>
-                                <!--<p><span>大数据分析</span></p>-->
                             </a>
-                         <#--   <a href="rootWarning">
-                                <h2>能耗预警</h2>
-                            </a>-->
                             <a href="rootScreen" target="_blank">
                                 <h2>能耗大屏</h2>
-                                <!--  <p><span>节能目标管理</span></p>-->
                             </a>
                             <a href="rootManager">
                                 <h2>管理页面</h2>
-                                <!--  <p><span>节能目标管理</span></p>-->
                             </a>
                         </div>
                     </div>

@@ -45,6 +45,8 @@ public class PowerZJFPGInfo implements Serializable{
     }
 
     public int getBeiLv() {
+        if (beiLv==0)
+            beiLv=1;
         return beiLv;
     }
 
@@ -61,7 +63,7 @@ public class PowerZJFPGInfo implements Serializable{
     }
 
     public float getZxygdnZ() {
-        return zxygdnZ*this.beiLv;
+        return zxygdnZ*this.getBeiLv();
     }
 
     public void setZxygdnZ(float zxygdnZ) {
@@ -69,7 +71,7 @@ public class PowerZJFPGInfo implements Serializable{
     }
 
     public float getZxygdnJ() {
-        return zxygdnJ*this.beiLv;
+        return zxygdnJ*this.getBeiLv();
     }
 
     public void setZxygdnJ(float zxygdnJ) {
@@ -77,7 +79,7 @@ public class PowerZJFPGInfo implements Serializable{
     }
 
     public float getZxygdnF() {
-        return zxygdnF*this.beiLv;
+        return zxygdnF*this.getBeiLv();
     }
 
     public void setZxygdnF(float zxygdnF) {
@@ -85,7 +87,7 @@ public class PowerZJFPGInfo implements Serializable{
     }
 
     public float getZxygdnP() {
-        return zxygdnP*this.beiLv;
+        return zxygdnP*this.getBeiLv();
     }
 
     public void setZxygdnP(float zxygdnP) {
@@ -93,7 +95,7 @@ public class PowerZJFPGInfo implements Serializable{
     }
 
     public float getZxygdnG() {
-        return zxygdnG*this.beiLv;
+        return zxygdnG*this.getBeiLv();
     }
 
     public void setZxygdnG(float zxygdnG) {

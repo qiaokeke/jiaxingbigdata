@@ -1,6 +1,4 @@
 $(function () {
-    // var setUrl = '/analysis/state';
-    // console.log("url: "+setUrl);
     /*企业能耗的点击事件*/
     var data_consition = [0, 0, 0, 0, 0,0,0];
     var myChart = echarts.init(document.getElementById('qsyc'));
@@ -12,8 +10,7 @@ $(function () {
             trigger: 'axis'
         },
         legend: {
-            top:30,
-            // data:['智能科技']
+            top:30
         },
         grid: {
             left: '3%',
@@ -40,13 +37,11 @@ $(function () {
             axisLabel : {
                 formatter: '{value} 千瓦时'
             }
-//                splitNumber:20 //总量分成多少份  最大值会自动获取
         },
         series: [
             {
                 name:comN,
                 type:'line',
-//                    stack: '总量',
                 data:[0, 0, 0, 0, 0, 0,0]
             }
         ]
@@ -59,12 +54,14 @@ $(function () {
         url:'/company/info',
         dataType:'json',
         success:function(info){
-            var setUrl = '/analysis/state?aCode='+companyCode+'&time='+d.getFullYear()+'-'+month+'-'+d.getDate();
-            console.log(setUrl);
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: setUrl,
+                url:"/jx/api/tswkZXYGDNViews",
+                data:{
+                    companyCode:info.companyCode,
+                    pCode:0
+                },
                 success: function(data) {
                     if(JSON.stringify(data) == '[]'){
                         console.log("用电状态json获取成功，该公司暂无数据！");
@@ -79,14 +76,13 @@ $(function () {
                     //装入数据
                     for (var i in data) {
                         if(data[i].time != 0){
-                            data_consition[data[i].time-1] = data[i].electricWeekCon;
+                            data_consition[data[i].time-1] = data[i].zxygdn;
                         }
                         else{
-                            data_consition[6] = data[i].electricWeekCon;
+                            data_consition[6] = data[i].zxygdn;
                         }
                     }
                     data_consition[6] = 0; //为了应付假数据
-                    // data_consition[5].value = data[5].electricWeekCon;  //读取并设置预计值
                     console.log("用电状态："+data_consition);
                     //表格重新绘制
                     myChart.setOption({
@@ -107,47 +103,6 @@ $(function () {
             console.log("公司信息获取失败。");
         }
     });
-    // var setUrl = '/analysis/state?aCode='+companyCode+'&time='+d.getFullYear()+'-'+month+'-'+d.getDate();
-    // console.log(setUrl);
-   /* $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: setUrl,
-        success: function(data) {
-            if(JSON.stringify(data) == '[]'){
-                console.log("用电状态json获取成功，该公司暂无数据！");
-                return 0;
-            }
-            //装入数据
-            for (var i in data) {
-                if(data[i].time != 0){
-                    data_consition[data[i].time-1] = data[i].electricWeekCon;
-                }
-                else{
-                    data_consition[6] = data[i].electricWeekCon;
-                }
-            }
-            data_consition[6] = 0; //为了应付假数据
-            // data_consition[5].value = data[5].electricWeekCon;  //读取并设置预计值
-            data_consition[5].value = 0;
-            console.log("用电状态：");
-            for (var i = 0; i<5;i++) {
-                console.log(data_consition[i]);
-            }
-            //表格重新绘制
-            myChart.setOption({
-                series: [
-                    {
-                        name:comN,
-                        data:data_consition
-                    }
-                ]
-            });
-        },
-        error: function() {
-            console.log("用电状态及趋势json信息请求失败");
-        }
-    });*/
 });
 <!--日历使用的函数-->
 function showChartZZT() {

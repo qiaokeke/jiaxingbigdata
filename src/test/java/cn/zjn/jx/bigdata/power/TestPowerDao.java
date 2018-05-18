@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.Time;
 import java.util.List;
 
 /**
@@ -32,6 +33,10 @@ public class TestPowerDao {
 
     @Autowired
     PowerDao powerDao;
+
+
+
+
     @Test
     public void testPowerMeterNewRecordInfo(){
         List<PowerMeterZXYGDNRecordInfo> powerMeterZXYGDNRecordInfoList = powerDao.selectPowerZXYGDNRecordInfos();
@@ -51,7 +56,7 @@ public class TestPowerDao {
 
     @Test
     public void testSelectPowerZJFPGInfos(){
-        List<PowerZJFPGInfo> infos = powerDao.selectPowerZJFPGInfosByCompanyCodeAndTime("2","2017-12-24","2017-12-28");
+        List<PowerZJFPGInfo> infos = powerDao.selectPowerZJFPGInfosByCompanyCodeAndTime("1",TimeUtil.TswkSTimeString, TimeUtil.TswkETimeString);
 
         for (PowerZJFPGInfo info:infos)
             System.out.println(info);
