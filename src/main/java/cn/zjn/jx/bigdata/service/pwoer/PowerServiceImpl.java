@@ -11,8 +11,11 @@ import cn.zjn.jx.bigdata.utils.SubValueUtil;
 import cn.zjn.jx.bigdata.utils.TimeUtil;
 import cn.zjn.jx.bigdata.utils.domain.TswkDate;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.text.ParseException;
 import java.util.*;
@@ -330,15 +333,25 @@ public class PowerServiceImpl implements PowerService {
 
     @Override
     public List<PowerAllView> selectPowerAllViews() {
-
-        List<PowerAllView> allViews = powerDao.selectPowerAllViews();
+        Subject subject = SecurityUtils.getSubject();
+        List<PowerAllView> allViews = new ArrayList<>();
+        if(subject.hasRole("admin"))
+            allViews = powerDao.selectPowerAllViews();
+        else
+            allViews = powerDao.selectPowerAllViewsByUsername((String) subject.getPrincipal());
         ExcelUtil.addIdtoPowerAllViews(allViews);
         return allViews;
     }
 
     @Override
     public Workbook getPowerAllViewsWorkbook() {
-        List<PowerAllView> views = powerDao.selectPowerAllViews();
+        Subject subject = SecurityUtils.getSubject();
+        List<PowerAllView> views = new ArrayList<>();
+        if(subject.hasRole("admin"))
+            views = powerDao.selectPowerAllViews();
+        else
+            views = powerDao.selectPowerAllViewsByUsername((String) subject.getPrincipal());
+
         ExcelUtil.addIdtoPowerAllViews(views);
         return ExcelUtil.getPowerAllViewsXls(views);
     }

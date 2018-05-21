@@ -6,6 +6,8 @@
 
 
     <resultMap id="user" type="cn.zjn.jx.bigdata.domain.sys.User"/>
+    <resultMap id="string" type="string"/>
+
     <select id="getUserByUsername" resultMap="user" useCache="false">
         SELECT
             sys_user.username AS username,
@@ -17,7 +19,19 @@
             sys_user.username = #{username}
     </select>
 
+    <select id="getRloesByUsername" resultMap="string">
+        SELECT
+            sys_role.roleName AS roleName
+        FROM
+            sys_user,
+            sys_role,
+            sys_user_role
+        WHERE
+            sys_user.id = sys_user_role.user_id
+        AND sys_role.id = sys_user_role.role_id
+        AND sys_user.username = #{username}
 
+    </select>
 
 
 

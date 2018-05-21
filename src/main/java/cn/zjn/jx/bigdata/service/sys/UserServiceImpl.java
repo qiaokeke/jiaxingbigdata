@@ -5,6 +5,8 @@ import cn.zjn.jx.bigdata.domain.sys.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 /**
  * @Author: qiaokk
  * @Description:
@@ -21,5 +23,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUserByUsername(String username) {
         return userDao.getUserByUsername(username);
+    }
+
+    @Override
+    public Set<String> getRolesByUsername(String username) {
+        return userDao.getRloesByUsername(username);
     }
 }

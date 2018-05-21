@@ -147,4 +147,6 @@ public interface PowerDao {
     public List<PowerZJFPGInfo> selectPowerZJFPGDayInfosByPCodeAndTime(@Param("pCode") String pCode,@Param("sTime") String sTime, @Param("eTime") String eTime);
 
     public List<PowerAllView> selectPowerAllViews();
+
+    public List<PowerAllView> selectPowerAllViewsByUsername(@Param("username") String username);
 }

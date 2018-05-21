@@ -4,6 +4,8 @@ import cn.zjn.jx.bigdata.domain.sys.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Set;
+
 /**
  * @Author: qiaokk
  * @Description:
@@ -16,5 +18,6 @@ public interface UserDao {
 
     public User getUserByUsername(@Param("username") String username);
 
+    public Set<String> getRloesByUsername(@Param("username") String username);
 
 }

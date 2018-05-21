@@ -324,4 +324,35 @@
 
     </select>
 
+    <select id="selectPowerAllViewsByUsername" resultMap="powerAllView">
+       SELECT
+            power_meter_info.meter_code AS pCode,
+            company_info.company_name AS companyName,
+            power_meter_record.p_zxygdn AS zxygdnZ,
+            power_meter_record.p_zxygdn_1 AS zxygdnJ,
+            power_meter_record.p_zxygdn_2 AS zxygdnF,
+            power_meter_record.p_zxygdn_3 AS zxygdnP,
+            power_meter_record.p_zxygdn_4 AS zxygdnG,
+            power_meter_info.beilv AS beiLv,
+            power_meter_record.p_time AS time
+        FROM
+            sys_user,
+            company_info,
+            power_meter_info,
+            power_meter_record
+        WHERE
+            sys_user.username = #{username}
+        AND sys_user.company_id = company_info.id
+        AND power_meter_info.company_code = company_info.company_code
+        AND power_meter_record.id IN (
+            SELECT
+                max(power_meter_record.id) AS id
+            FROM
+                power_meter_record
+            GROUP BY
+                power_meter_record.p_code
+        )
+        AND power_meter_record.p_code = power_meter_info.meter_code
+    </select>
+
 </mapper>

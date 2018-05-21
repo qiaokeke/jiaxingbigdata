@@ -7,6 +7,7 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
@@ -43,7 +44,12 @@ public class ShiroConfig {
         Realm realm = new AuthorizingRealm() {
             @Override
             protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-                return null;
+                String username = (String)principalCollection.getPrimaryPrincipal();
+                SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+                authorizationInfo.setRoles(userService.getRolesByUsername(username));
+                //authorizationInfo.setStringPermissions(userService.findPermissions(username));
+                return authorizationInfo;
+                //return null;
             }
 
 

@@ -5,6 +5,7 @@ import cn.zjn.jx.bigdata.domain.power.PowerMeterInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,6 +27,18 @@ public interface CompanyDao {
 
     public List<CompanyInfo> selectCompanyInfos();
 
+
+    @Select({"SELECT\n" +
+            "\tcompany_info.company_code AS companyCode,\n" +
+            "\tcompany_info.company_name AS companyName\n" +
+            "FROM\n" +
+            "\tsys_user,\n" +
+            "\tcompany_info\n" +
+            "WHERE\n" +
+            "\tsys_user.company_id = company_info.id\n" +
+            "AND sys_user.username = #{username}"
+    })
+    public List<CompanyInfo> selectCompanyInfosByUsername(@RequestParam("username") String username);
 
     @Select({"SELECT\n" +
             "power_meter_info.meter_code AS pCode,\n" +
