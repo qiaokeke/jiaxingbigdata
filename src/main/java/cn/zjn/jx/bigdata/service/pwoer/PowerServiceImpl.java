@@ -253,6 +253,7 @@ public class PowerServiceImpl implements PowerService {
             infos = powerDao.selectPowerZXYGDNHoursInfosByCompanyCodeAndTime(companyCode,TimeUtil.TDaySTimeString,TimeUtil.TDayETimeString);
         else
             infos = powerDao.selectPowerZXYGDNHoursInfosByPCodeAndTime(pCode,TimeUtil.TDaySTimeString,TimeUtil.TDayETimeString);
+        System.out.println(infos);
         List<PowerZXYGDNView> views;
         views = MergeUtil.mergeZXYGDNInfos2Views(infos);
         SubValueUtil.subValueOfPowerZXYGDNViews(views);
