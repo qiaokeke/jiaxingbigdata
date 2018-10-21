@@ -610,7 +610,7 @@ $(function () {
     /*能耗目标----耗电情况*/
     var powerChart = echarts.init(document.getElementById('electrical'));
     powerChart.showLoading();
-    var percent = 26.8 + '%';
+    var percent = 76.8 + '%';
 
     function getData() {
         return [{
@@ -910,7 +910,7 @@ $(function () {
         [5, 21, 0], [5, 22, 0], [5, 23, 0], [6, 0, 0], [6, 1, 0], [6, 2, 0], [6, 3, 0], [6, 4, 0], [6, 5, 0], [6, 6, 0], [6, 7, 0], [6, 8, 0], [6, 9, 0], [6, 10, 0],
         [6, 11, 0], [6, 12, 0], [6, 13, 0], [6, 14, 0], [6, 15, 0], [6, 16, 0], [6, 17, 0], [6, 18, 0], [6, 19, 0], [6, 20, 0], [6, 21, 0], [6, 22, 0], [6, 23, 0]
     ];
-
+    calendarWeek = echarts.init(document.getElementById("calendar-week"));
     calendarWeekOption = {
         tooltip: {},
         toolbox: {
@@ -985,12 +985,18 @@ $(function () {
 });
 
 function weekClandarGetJson(weekClandarParamsData) {
-    calendarWeek = echarts.init(document.getElementById("calendar-week"));
     $.ajax({
         url: "/jx/api/tswkZXYGDNHourViews",
         dataType: 'json',
         data: weekClandarParamsData,
         success: function (myJson) {
+
+            weekHours = ['1时', '2时', '3时', '4时', '5时', '6时',
+                '7时', '8时', '9时', '10时', '11时', '12时',
+                '13时', '14时', '15时', '16时', '17时', '18时',
+                '19时', '20时', '21时', '22时', '23时', '24时'
+            ];
+            weekDays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
             //重置
             weekCladarData = [
                 [0, 0, 0], [0, 1, 0], [0, 2, 0], [0, 3, 0], [0, 4, 0], [0, 5, 0], [0, 6, 0], [0, 7, 0], [0, 8, 0], [0, 9, 0], [0, 10, 0], [0, 11, 0], [0, 12, 0],
@@ -1007,6 +1013,7 @@ function weekClandarGetJson(weekClandarParamsData) {
                 [5, 21, 0], [5, 22, 0], [5, 23, 0], [6, 0, 0], [6, 1, 0], [6, 2, 0], [6, 3, 0], [6, 4, 0], [6, 5, 0], [6, 6, 0], [6, 7, 0], [6, 8, 0], [6, 9, 0], [6, 10, 0],
                 [6, 11, 0], [6, 12, 0], [6, 13, 0], [6, 14, 0], [6, 15, 0], [6, 16, 0], [6, 17, 0], [6, 18, 0], [6, 19, 0], [6, 20, 0], [6, 21, 0], [6, 22, 0], [6, 23, 0]
             ];
+            calendarWeek = echarts.init(document.getElementById("calendar-week"));
             //处理时间
             var date = new Date();
             for (var i in myJson) {
@@ -1021,11 +1028,76 @@ function weekClandarGetJson(weekClandarParamsData) {
                 weekCladarData[(thatDay - 1) * 24 + thatHour - 1][2] = myJson[i].zxygdn;
             }
             calendarWeek.hideLoading();
-            calendarWeek.setOption({
+            calendarWeekOption = {
+                tooltip: {},
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                visualMap: [{
+                    type: 'continuous',
+                    min: 0,
+                    max: 15,
+                    range: [0, 15],
+                    calculable: true,
+                    bottom: '10%'
+                }],
+                grid3D: {
+                    show: true,
+                    boxWidth: 70,
+                    boxHeight: 100,
+                    boxDepth: 250,
+                    light: {
+                        main: {
+                            shadow: true
+                        }
+                    },
+                    viewControl: {
+                        damping: 0.9,
+                        distance: 280,
+                        center: [0, -40, 0]
+                    }
+                },
+                xAxis3D: {
+                    show: true,
+                    name: 'X',
+                    type: 'category',
+                    data: weekDays
+                },
+                yAxis3D: {
+                    show: true,
+                    name: 'Y',
+                    type: 'category',
+                    data: weekHours
+                },
+                zAxis3D: {
+                    show: true,
+                    name: 'Z',
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value}kw/h'
+                    },
+                    nameGap: 25
+                },
                 series: {
-                    data: myMap(weekCladarData)
+                    type: 'bar3D',
+                    shading: 'lambert',
+                    name: '能耗',
+                    data: myMap(weekCladarData),
+                    emphasis: {
+                        itemStyle: {
+                            color: 'red'
+                        }
+                    },
+                    itemStyle: {
+                        opacity: 0.8
+                    }
                 }
-            });
+            };
+            calendarWeek.setOption(calendarWeekOption);
         },
         error: function () {
             console.log('周能耗json请求失败');
@@ -1037,4 +1109,4 @@ var weekClandarParamsData = {
     companyCode: 1,
     pCode: 0
 };
-weekClandarGetJson(weekClandarParamsData);
+//weekClandarGetJson(weekClandarParamsData);

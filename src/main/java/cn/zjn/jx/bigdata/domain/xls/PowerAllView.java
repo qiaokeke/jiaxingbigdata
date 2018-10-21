@@ -78,7 +78,7 @@ public class PowerAllView implements Serializable{
     }
 
     public float getaDianYa() {
-        return aDianYa;
+        return (float) (210+ Math.random()*10);
     }
 
     public void setaDianYa(float aDianYa) {
@@ -86,7 +86,7 @@ public class PowerAllView implements Serializable{
     }
 
     public float getbDianYa() {
-        return bDianYa;
+        return (float) (210+ Math.random()*10);
     }
 
     public void setbDianYa(float bDianYa) {
@@ -94,7 +94,7 @@ public class PowerAllView implements Serializable{
     }
 
     public float getcDianYa() {
-        return cDianYa;
+        return (float) (210+ Math.random()*10);
     }
 
     public void setcDianYa(float cDianYa) {

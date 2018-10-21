@@ -233,11 +233,11 @@ function getList() {
                 allNum++;
             }
             //计算页数
-            if (allNum % 4 == 0) {
-                var pageNum = Math.floor(allNum / 4);
+            if (allNum % 50 == 0) {
+                var pageNum = Math.floor(allNum / 50);
             }
             else {
-                var pageNum = Math.floor(allNum / 4) + 1;
+                var pageNum = Math.floor(allNum / 50) + 1;
             }
             $.jqPaginator('#page', {
                 totalPages: pageNum,
@@ -250,14 +250,14 @@ function getList() {
                 last: '<li class="last"><a href="javascript:void(0);">尾页</a></li>',
                 page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
                 onPageChange: function (num) {
-                    var id = (num - 1) * 4 + 1;
-                    var beginNum = (num - 1) * 4;
+                    var id = (num - 1) * 50 + 1;
+                    var beginNum = (num - 1) * 50;
 
                     if (num == pageNum) {
                         var endNum = allNum;
                     }
                     else {
-                        var endNum = num * 4;
+                        var endNum = num * 50;
                     }
                     var str = '';
                     for (var index = beginNum; index < endNum; index++) {

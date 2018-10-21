@@ -1,10 +1,8 @@
 package cn.zjn.jx.bigdata.web.api;
 
 import cn.zjn.jx.bigdata.domain.power.*;
-import cn.zjn.jx.bigdata.domain.powerandwater.PowerWaterZRecordView;
 import cn.zjn.jx.bigdata.domain.xls.PowerAllView;
 import cn.zjn.jx.bigdata.service.pwoer.PowerService;
-import com.sun.deploy.net.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +33,24 @@ public class PowerApi {
     PowerService powerService;
 
     @RequestMapping("/top5Companys")
-    public List<PowerMeterZXYGDNRecordView> getTop5Companys(){
-        return powerService.selectTop5PowerCompanyInfos();
+    public String getTop5CompanysStrings(){
+        return "[{\"companyName\":\"嘉兴敏胜汽车零部件有限公司\",\"zxygdn\":30052.89},{\"companyName\":\"嘉兴进隆塑业\",\"zxygdn\":23683.95},{\"companyName\":\"亮兮柯电气有限公司\",\"zxygdn\":11314.83},{\"companyName\":\"万思佳电器(嘉兴)有限公司\",\"zxygdn\":10872.64},{\"companyName\":\"嘉兴有成包装有限公司\",\"zxygdn\":9999.99},{\"companyName\":\"嘉兴市忠辉药业有限责任公司\",\"zxygdn\":9053.57},{\"companyName\":\"浙江安宁生物科技有限公司\",\"zxygdn\":6184.87},{\"companyName\":\"捷顺旅游制品有限公司\",\"zxygdn\":5758.12},{\"companyName\":\"浙江天正智能电器有限公司\",\"zxygdn\":4167.99},{\"companyName\":\"浙江宏业检测科技有限公司\",\"zxygdn\":3135.8198},{\"companyName\":\"嘉兴市新时代包装彩印有限公司\",\"zxygdn\":2880.16},{\"companyName\":\"浙江恒欣建筑设计股份有限公司\",\"zxygdn\":2692.71},{\"companyName\":\"嘉兴立家母婴用品有限公司\",\"zxygdn\":2513.3},{\"companyName\":\"浙江顺联智能设备有限公司\",\"zxygdn\":2184.43},{\"companyName\":\"嘉兴市华晟助剂有限公司\",\"zxygdn\":2029.16},{\"companyName\":\"沃尔德\",\"zxygdn\":2001.02},{\"companyName\":\"赛捷弹簧制\",\"zxygdn\":1921.08},{\"companyName\":\"浙江南阜\",\"zxygdn\":1779.55},{\"companyName\":\"嘉兴郑鲜机械有限公司\",\"zxygdn\":1663.24},{\"companyName\":\"嘉兴思可达机械制造有限公司\",\"zxygdn\":1652.94},{\"companyName\":\"浙江森永光电设备有限公司\",\"zxygdn\":1518.41},{\"companyName\":\"浙江瑞翌新材料科技有限公司\",\"zxygdn\":1206.72},{\"companyName\":\"赛捷弹簧\",\"zxygdn\":1113.56},{\"companyName\":\"浙江远中冠兴自动化科技有限公司\",\"zxygdn\":904.53},{\"companyName\":\"嘉兴市华信科教仪器有限公司\",\"zxygdn\":429.02},{\"companyName\":null,\"zxygdn\":0.0},{\"companyName\":\"浙江福莱特玻璃有限公司\",\"zxygdn\":0.0},{\"companyName\":\"嘉兴丰利汇织造有限公司\",\"zxygdn\":0.0},{\"companyName\":\"嘉兴李朝化纤有限公司\",\"zxygdn\":0.0},{\"companyName\":\"浙江曜良纺织有限公司\",\"zxygdn\":0.0},{\"companyName\":\"浙江生辉照明有限公司\",\"zxygdn\":0.0},{\"companyName\":\"嘉兴市兴嘉汽车零部件制造有限公司\",\"zxygdn\":0.0},{\"companyName\":\"浙江三和机电科技有限公司\",\"zxygdn\":0.0},{\"companyName\":\"上澎太阳能科技（嘉兴）有限公司\",\"zxygdn\":0.0},{\"companyName\":\"嘉兴欣龙染整有限公司\",\"zxygdn\":0.0},{\"companyName\":\"浙江芬齐涂料密封胶有限公司\",\"zxygdn\":0.0},{\"companyName\":\"浙江雅莹集团有限公司\",\"zxygdn\":0.0},{\"companyName\":\"嘉兴山蒲照明电器有限公司\",\"zxygdn\":0.0},{\"companyName\":\"恩龙实业（嘉兴）有限公司\",\"zxygdn\":0.0},{\"companyName\":\"世源科技（嘉兴）医疗电子有限公司\",\"zxygdn\":0.0},{\"companyName\":\"耐思电气(嘉兴)有限公司\",\"zxygdn\":0.0},{\"companyName\":\"浙江凯发新材料有限公司\",\"zxygdn\":0.0},{\"companyName\":\"嘉兴捷顺旅游制品有限公司\",\"zxygdn\":0.0},{\"companyName\":\"嘉兴市捷豪清洁用品有限公司\",\"zxygdn\":0.0},{\"companyName\":\"珂纳电气机械股份有限公司\",\"zxygdn\":0.0},{\"companyName\":\"弘裕纺织(浙江)有限公司\",\"zxygdn\":0.0},{\"companyName\":\"永丰余纸业（嘉兴）有限公司\",\"zxygdn\":0.0},{\"companyName\":\"荣光精密部件（嘉兴）有限公司\",\"zxygdn\":0.0},{\"companyName\":\"新天地纺织印染（嘉兴）有限公司\",\"zxygdn\":0.0},{\"companyName\":\"浙江嘉欣丝绸股份有限公司\",\"zxygdn\":0.0},{\"companyName\":\"浙江五芳斋实业股份有限公司\",\"zxygdn\":0.0}]";
     }
 
+   /* @RequestMapping("/top5Companys")
+    public List<PowerMeterZXYGDNRecordView> getTop5Companys(){
+        return powerService.selectTop5PowerCompanyInfos();
+    }*/
+
     @RequestMapping("/realTimeCompanys")
+    public String getRealTimeCompanysStrings(){
+        return "[{\"companyName\":\"嘉兴敏胜汽车零部件有限公司\",\"waterValue\":0.0,\"zxygdn\":30052.828},{\"companyName\":\"嘉兴进隆塑业\",\"waterValue\":0.0,\"zxygdn\":23683.95},{\"companyName\":\"亮兮柯电气有限公司\",\"waterValue\":0.0,\"zxygdn\":11314.77},{\"companyName\":\"万思佳电器(嘉兴)有限公司\",\"waterValue\":0.0,\"zxygdn\":10872.64},{\"companyName\":\"嘉兴有成包装有限公司\",\"waterValue\":0.0,\"zxygdn\":9999.99},{\"companyName\":\"嘉兴市忠辉药业有限责任公司\",\"waterValue\":0.0,\"zxygdn\":9053.57},{\"companyName\":\"浙江安宁生物科技有限公司\",\"waterValue\":0.0,\"zxygdn\":6184.8604},{\"companyName\":\"捷顺旅游制品有限公司\",\"waterValue\":0.0,\"zxygdn\":5758.12},{\"companyName\":\"浙江天正智能电器有限公司\",\"waterValue\":0.0,\"zxygdn\":4167.9697},{\"companyName\":\"浙江宏业检测科技有限公司\",\"waterValue\":0.0,\"zxygdn\":3135.8198},{\"companyName\":\"嘉兴市新时代包装彩印有限公司\",\"waterValue\":0.0,\"zxygdn\":2880.16},{\"companyName\":\"浙江恒欣建筑设计股份有限公司\",\"waterValue\":0.0,\"zxygdn\":2692.71},{\"companyName\":\"嘉兴立家母婴用品有限公司\",\"waterValue\":0.0,\"zxygdn\":2513.3},{\"companyName\":\"浙江顺联智能设备有限公司\",\"waterValue\":0.0,\"zxygdn\":2184.43},{\"companyName\":\"嘉兴市华晟助剂有限公司\",\"waterValue\":0.0,\"zxygdn\":2029.16},{\"companyName\":\"沃尔德\",\"waterValue\":0.0,\"zxygdn\":2001.02},{\"companyName\":\"赛捷弹簧制\",\"waterValue\":0.0,\"zxygdn\":1921.08},{\"companyName\":\"浙江南阜\",\"waterValue\":0.0,\"zxygdn\":1779.55},{\"companyName\":\"嘉兴郑鲜机械有限公司\",\"waterValue\":0.0,\"zxygdn\":1663.24},{\"companyName\":\"嘉兴思可达机械制造有限公司\",\"waterValue\":0.0,\"zxygdn\":1652.94},{\"companyName\":\"浙江森永光电设备有限公司\",\"waterValue\":0.0,\"zxygdn\":1518.41},{\"companyName\":\"浙江瑞翌新材料科技有限公司\",\"waterValue\":0.0,\"zxygdn\":1206.72},{\"companyName\":\"赛捷弹簧\",\"waterValue\":0.0,\"zxygdn\":1113.56},{\"companyName\":\"浙江远中冠兴自动化科技有限公司\",\"waterValue\":0.0,\"zxygdn\":904.53},{\"companyName\":\"嘉兴市华信科教仪器有限公司\",\"waterValue\":0.0,\"zxygdn\":429.02},{\"companyName\":\"浙江福莱特玻璃有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"嘉兴丰利汇织造有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"嘉兴李朝化纤有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"浙江曜良纺织有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"浙江生辉照明有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"嘉兴市兴嘉汽车零部件制造有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"浙江三和机电科技有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"上澎太阳能科技（嘉兴）有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"嘉兴欣龙染整有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"浙江芬齐涂料密封胶有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"浙江雅莹集团有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"嘉兴山蒲照明电器有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"恩龙实业（嘉兴）有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"世源科技（嘉兴）医疗电子有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"耐思电气(嘉兴)有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"浙江凯发新材料有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"嘉兴捷顺旅游制品有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"嘉兴市捷豪清洁用品有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"珂纳电气机械股份有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"弘裕纺织(浙江)有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"永丰余纸业（嘉兴）有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"荣光精密部件（嘉兴）有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"新天地纺织印染（嘉兴）有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"浙江嘉欣丝绸股份有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0},{\"companyName\":\"浙江五芳斋实业股份有限公司\",\"waterValue\":0.0,\"zxygdn\":0.0}]";
+    }
+
+  /*  @RequestMapping("/realTimeCompanys")
     public List<PowerWaterZRecordView> getRealTimeCompanys(){
         return powerService.selectPowerWaterZRecordViews();
-    }
+    }*/
 
     /**
      * 后期加上水的

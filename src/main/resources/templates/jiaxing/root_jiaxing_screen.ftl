@@ -33,7 +33,7 @@
                         </div>
                         <div class="weather-right">
                             <div class="weather-text">
-                                <div class="weather-text-left"><span class="centigrade">10&#176;</span></div>
+                                <div class="weather-text-left"><span class="centigrade">17&#176;</span></div>
                                 <div class="weather-text-right">嘉兴<br />多云</div>
                             </div>
                             <div class="weather-bottom">
@@ -86,14 +86,14 @@
                             <div>
                                 <ul id="coal">
                                     <li>0</li>
-                                    <li>0</li>
-                                    <li>0</li>
-                                    <li>0</li>
-                                    <li>0</li>
-                                    <li>0</li>
+                                    <li>3</li>
+                                    <li>6</li>
+                                    <li>2</li>
+                                    <li>7</li>
+                                    <li>1</li>
                                     <li>.</li>
-                                    <li>0</li>
-                                    <li>0</li>
+                                    <li>4</li>
+                                    <li>8</li>
                                 </ul>
                             </div>
                         </div>
@@ -114,20 +114,44 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>电力监测点A22</td>
+                                <td>雅莹集团有限公司</td>
+                                <td>0</td>
+                                <td>23.52</td>
+                                <td>578.66</td>
+                                <td>电表数据读取失败</td>
+                                <td>12:34:00 18/10</td>
+                            </tr>
+                            <tr>
+                                <td>荣光精密部件（嘉兴）有限公司</td>
+                                <td>0</td>
+                                <td>23.52</td>
+                                <td>578.66</td>
+                                <td>电表数据读取失败</td>
+                                <td>18:24:00 18/10</td>
+                            </tr>
+                            <tr>
+                                <td>嘉兴市捷豪清洁用品有限公司</td>
+                                <td>0</td>
+                                <td>23.52</td>
+                                <td>578.66</td>
+                                <td>电表数据读取失败</td>
+                                <td>14:44:00 15/10</td>
+                            </tr>
+                            <tr>
+                                <td>嘉兴捷顺旅游制品有限公司</td>
                                 <td>0</td>
                                 <td>23.52</td>
                                 <td>578.66</td>
                                 <td>A相电流异常</td>
-                                <td>12:34:00 12/12</td>
+                                <td>16:38:00 12/10</td>
                             </tr>
                             <tr>
-                                <td>电力监测点B10</td>
+                                <td>嘉兴山蒲照明电器有限公司</td>
                                 <td>0</td>
                                 <td>23.52</td>
                                 <td>578.66</td>
-                                <td>数值异常</td>
-                                <td>12:34:00 12/6</td>
+                                <td>电压数值异常</td>
+                                <td>02:39:00 11/10</td>
                             </tr>
                             </tbody>
                         </table>

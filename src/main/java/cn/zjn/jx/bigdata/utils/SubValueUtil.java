@@ -58,7 +58,8 @@ public class SubValueUtil {
             float subValueP = views.get(i).getZxygdnP()-views.get(i-1).getZxygdnP();
             float subValueG = views.get(i).getZxygdnG()-views.get(i-1).getZxygdnG();
 
-            if(views.get(i-1).getZxygdnZ()==0||subValueZ==0){
+
+            if(views.get(i-1).getZxygdnZ()==0||subValueZ==0||subValueF<0||subValueG<0||subValueJ<0||subValueP<0||subValueZ<0){
                 subValueZ=0;
                 subValueJ=0;
                 subValueF=0;

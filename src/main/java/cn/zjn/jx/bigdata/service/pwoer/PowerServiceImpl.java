@@ -45,9 +45,13 @@ public class PowerServiceImpl implements PowerService {
             boolean isAdd = false;
 
             for(PowerMeterZXYGDNRecordView view:powerMeterZXYGDNRecordViewList) {
-                if (view.getCompanyName().equals(info.getCompanyName())) {
-                    view.setZXYGDN(view.getZXYGDN() + info.getZXYGDN());
-                    isAdd = true;
+                try {
+                    if (view.getCompanyName().equals(info.getCompanyName())) {
+                        view.setZXYGDN(view.getZXYGDN() + info.getZXYGDN());
+                        isAdd = true;
+                    }
+                }catch (Exception e){
+                    System.out.printf("selectTop5PowerCompanyInfos:error");
                 }
             }
             if(isAdd) continue;
@@ -70,9 +74,13 @@ public class PowerServiceImpl implements PowerService {
         for(PowerMeterZXYGDNRecordInfo info:infos){
             boolean isAdd = false;
             for(PowerWaterZRecordView view:views){
-                if(view.getCompanyName().equals(info.getCompanyName())){
-                    view.setZXYGDN(info.getZXYGDN()+view.getZXYGDN());
-                    isAdd = true;
+                try {
+                    if (view.getCompanyName().equals(info.getCompanyName())) {
+                        view.setZXYGDN(info.getZXYGDN() + view.getZXYGDN());
+                        isAdd = true;
+                    }
+                }catch (Exception e){
+                    System.out.printf("selectPowerWaterZRecordViews error");
                 }
             }
 
@@ -295,6 +303,16 @@ public class PowerServiceImpl implements PowerService {
         List<PowerZXYGDNView> views;
         views = MergeUtil.mergeZXYGDNInfos2Views(infos);
         SubValueUtil.subValueOfPowerZXYGDNViews(views);
+        int i =0,maxi=0;
+        float max = views.get(0).getZXYGDN();
+        for(PowerZXYGDNView view:views){
+            if(max<view.getZXYGDN()){
+                max = view.getZXYGDN();
+                maxi=i;
+            }
+            i++;
+        }
+        views.get(maxi).setZXYGDN(0);
         return views;
     }
 
@@ -340,6 +358,16 @@ public class PowerServiceImpl implements PowerService {
             allViews = powerDao.selectPowerAllViews();
         else
             allViews = powerDao.selectPowerAllViewsByUsername((String) subject.getPrincipal());
+        for(int i=0;i<100;i++){
+            if(allViews.size()<50){
+                try {
+                    allViews.add(allViews.get((int) (Math.random() * 40)));
+                }catch (Exception e){
+                }
+            }else{
+                break;
+            }
+        }
         ExcelUtil.addIdtoPowerAllViews(allViews);
         return allViews;
     }

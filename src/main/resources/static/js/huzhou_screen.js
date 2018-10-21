@@ -104,7 +104,7 @@ function chartOne() {
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['八月', '九月', '十月','十一月','十二月']
+            data: ['六月','七月','八月', '九月', '十月']
         },
         yAxis: [
             {
@@ -234,13 +234,13 @@ function item3() {
                 name: 'NO.4 湖州优创电子商务有限公司',
                 value: 280
             }, */{
-                name: 'NO.3 湖州舒乐网络科技有限公司',
+                name: 'NO.3 亮兮柯电气有限公司',
                 value: 380
             }, {
-                name: 'NO.2 湖州恩赐智能科技有限公司',
+                name: 'NO.2 捷顺旅游制品有限公司',
                 value: 480
             }, {
-                name: 'NO.1 湖州丽锦环保科技有限公司',
+                name: 'NO.1 浙江天正智能电器有限公司',
                 value: 580
             }],
             itemStyle: {

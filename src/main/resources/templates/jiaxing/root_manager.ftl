@@ -53,7 +53,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-12 common-grid" id="A-U"></div>
             </div>
             <div class="row" style="margin-top:40px;">
-                <div class="col-sm-12 col-md-12 col-lg-12 common-grid">
+                <div class="col-sm-12 col-md-12 col-lg-12 common-grid" style="height: 3000px">
                     <div class="row title">
                         <div class="col-md-6 col-sm-6 col-xs-6">今日能耗列表</div>
                         <div class="col-md-6 col-sm-6 col-xs-6">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="row table-container">
-                        <table class="table table-striped table-hover">
+                        <table class="table table-striped table-hover" >
                             <thead>
                             <tr>
                                 <th>序号</th>
