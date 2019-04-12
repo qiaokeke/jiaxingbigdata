@@ -162,7 +162,7 @@ function createAandU() {
         xAxis: [
             {
                 type: 'category',
-                data: ['1时', '2时', '3时', '4时', '5时', '6时', '7时', '8时', '9时', '10时', '11时', '12时'],
+                data: ['1时', '2时', '3时', '4时', '5时', '6时', '7时', '8时', '9时', '10时', '11时', '12时', '13时', '14时', '15时'],
                 axisPointer: {
                     type: 'shadow'
                 }
@@ -195,27 +195,27 @@ function createAandU() {
                 name: '电流',
                 type: 'bar',
                 yAxisIndex: 0,
-                data: [2.0, 4.9, 7.0, 23.2, 25.6, 17.7, 35.6, 17.2, 32.6, 20.0, 6.4, 3.3]
+                data: [2.0, 4.9, 7.0, 23.2, 25.6, 17.7, 35.6, 17.2, 32.6, 20.0, 6.4, 7.3,8.2, 10.6, 8.0]
             },
             {
                 name: '电压',
                 type: 'bar',
                 yAxisIndex: 1,
-                data: [220, 218, 219, 220, 218, 210, 216, 216, 221, 213, 220, 219]
+                data: [220, 218, 219, 220, 218, 210, 216, 216, 221, 213, 220, 219, 213, 220, 219]
             },
             {
                 name: '电流',
                 type: 'line',
                 yAxisIndex: 0,
                 smooth: true,
-                data: [2.0, 4.9, 7.0, 23.2, 25.6, 17.7, 35.6, 17.2, 32.6, 20.0, 6.4, 3.3]
+                data: [2.0, 4.9, 7.0, 23.2, 25.6, 17.7, 35.6, 17.2, 32.6, 20.0, 6.4, 7.3,8.2, 10.6, 8.0]
             },
             {
                 name: '电压',
                 type: 'line',
                 yAxisIndex: 1,
                 smooth: true,
-                data: [220, 218, 219, 220, 218, 210, 216, 216, 221, 213, 220, 219]
+                data: [220, 218, 219, 220, 218, 210, 216, 216, 221, 213, 220, 219, 213, 220, 219]
             }
         ]
     };
@@ -233,11 +233,11 @@ function getList() {
                 allNum++;
             }
             //计算页数
-            if (allNum % 50 == 0) {
-                var pageNum = Math.floor(allNum / 50);
+            if (allNum % 80 == 0) {
+                var pageNum = Math.floor(allNum / 80);
             }
             else {
-                var pageNum = Math.floor(allNum / 50) + 1;
+                var pageNum = Math.floor(allNum / 80) + 1;
             }
             $.jqPaginator('#page', {
                 totalPages: pageNum,
@@ -250,18 +250,18 @@ function getList() {
                 last: '<li class="last"><a href="javascript:void(0);">尾页</a></li>',
                 page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
                 onPageChange: function (num) {
-                    var id = (num - 1) * 50 + 1;
-                    var beginNum = (num - 1) * 50;
+                    var id = (num - 1) * 80 + 1;
+                    var beginNum = (num - 1) * 80;
 
                     if (num == pageNum) {
                         var endNum = allNum;
                     }
                     else {
-                        var endNum = num * 50;
+                        var endNum = num * 80;
                     }
                     var str = '';
                     for (var index = beginNum; index < endNum; index++) {
-                        str += '<tr><td>' + id + '</td><td><a href=\"rootSingleData\" target=\"_blank\">' + myList[index].companyName + '</a></td><td>' + myList[index].pCode + '</td><td>' + myList[index].aDianYa + '</td><td>' + myList[index].bDianYa + '</td><td>' + myList[index].cDianYa + '</td><td>' + myList[index].zxygdnZ + '</td><td>' + myList[index].zxygdnJ + '</td><td>' + myList[index].zxygdnF + '</td><td>' + myList[index].zxygdnG + '</td><td>' + myList[index].beiLv + '</td><td>' + myList[index].time + '</td></tr>';
+                        str += '<tr><td>' + id + '</td><td><a href=\"#\">' + myList[index].companyName + '</a></td><td>' + myList[index].pCode + '</td><td>' + myList[index].aDianYa + '</td><td>' + myList[index].bDianYa + '</td><td>' + myList[index].cDianYa + '</td><td>' + myList[index].zxygdnZ + '</td><td>' + myList[index].zxygdnJ + '</td><td>' + myList[index].zxygdnF + '</td><td>' + myList[index].zxygdnG + '</td><td>' + myList[index].beiLv + '</td><td>' + myList[index].time + '</td></tr>';
                         id++;
                     }
                     $("#todayList").html(str);

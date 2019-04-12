@@ -849,8 +849,8 @@ function createDashboardC() {
  */
 
 //厂房轮播参数
-var comList = ['1', '2', '3'];
-var comNameList = ["雅莹集团","亮兮柯电气有限公司","捷顺旅游制品有限公司"];
+var comList = [ '2', '3'];
+var comNameList = ["亮兮柯电气有限公司","捷顺旅游制品有限公司"];
 function showWE() {
     var comlen = comList.length;
     var comIndex = 0;

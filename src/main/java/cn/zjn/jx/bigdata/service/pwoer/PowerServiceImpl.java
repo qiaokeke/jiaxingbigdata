@@ -2,6 +2,7 @@ package cn.zjn.jx.bigdata.service.pwoer;
 
 import cn.zjn.jx.bigdata.dao.company.CompanyDao;
 import cn.zjn.jx.bigdata.dao.power.PowerDao;
+import cn.zjn.jx.bigdata.domain.company.CompanyInfo;
 import cn.zjn.jx.bigdata.domain.power.*;
 import cn.zjn.jx.bigdata.domain.powerandwater.PowerWaterZRecordView;
 import cn.zjn.jx.bigdata.domain.xls.PowerAllView;
@@ -354,21 +355,26 @@ public class PowerServiceImpl implements PowerService {
     public List<PowerAllView> selectPowerAllViews() {
         Subject subject = SecurityUtils.getSubject();
         List<PowerAllView> allViews = new ArrayList<>();
-        if(subject.hasRole("admin"))
+        if(subject.hasRole("admin")){
             allViews = powerDao.selectPowerAllViews();
-        else
-            allViews = powerDao.selectPowerAllViewsByUsername((String) subject.getPrincipal());
-        for(int i=0;i<100;i++){
-            if(allViews.size()<50){
-                try {
-                    allViews.add(allViews.get((int) (Math.random() * 40)));
-                }catch (Exception e){
+            List<CompanyInfo> infos = companyDao.selectCompanyInfos();
+            for(int i=0;i<100;i++){
+                if(allViews.size()<69){
+                    try {
+                        PowerAllView view = allViews.get((int) (Math.random() * 40));
+                        view.setCompanyName(infos.get((int) (Math.random()*40)).getCompanyName());
+                        allViews.add(view);
+                    }catch (Exception e){
+                    }
+                }else{
+                    break;
                 }
-            }else{
-                break;
             }
         }
+        else
+            allViews = powerDao.selectPowerAllViewsByUsername((String) subject.getPrincipal());
         ExcelUtil.addIdtoPowerAllViews(allViews);
+        System.out.println(allViews);
         return allViews;
     }
 

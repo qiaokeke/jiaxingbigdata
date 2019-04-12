@@ -326,7 +326,7 @@ function showUserProportion() {
             left: 'right',
             width: '20%',
             right: 0,
-            data: ['服装', '智能家电', '其他'],
+            data: ['节能环保', '高端制造', '其他'],
             textStyle: {
                 color: 'white',
                 fontSize: 12
@@ -363,8 +363,8 @@ function showUserProportion() {
                 }
             },
             data: [
-                {value: 17, name: '服装'},
-                {value: 73, name: '智能家电'},
+                {value: 17, name: '节能环保'},
+                {value: 73, name: '高端制造'},
                 {value: 10, name: '其他'}
             ],
             itemStyle: {
@@ -483,7 +483,7 @@ function showUserEnergyProportion() {
             left: 'right',
             width: '20%',
             right: 0,
-            data: ['服装', '智能家电', '其他'],
+            data: ['节能环保', '高端制造', '其他'],
             textStyle: {
                 color: 'white',
                 fontSize: 12
@@ -502,8 +502,8 @@ function showUserEnergyProportion() {
                 }
             },
             data: [
-                {value: 17, name: '服装'},
-                {value: 73, name: '智能家电'},
+                {value: 17, name: '节能环保'},
+                {value: 73, name: '高端制造'},
                 {value: 10, name: '其他'}
             ],
             itemStyle: {
@@ -857,7 +857,7 @@ function jianFengGuPing() {
     jianFengGuPing.showLoading();
     jianFengGuOption = {
         title : {
-            text: '雅莹集团尖峰谷电能耗',
+            text: '捷顺旅游尖峰谷电能耗',
             textStyle: {
                 color: "white"
             }
@@ -914,7 +914,7 @@ function jianFengGuPing() {
             jianFengGuPing.hideLoading();
             jianFengGuPing.setOption({
                 title: {
-                    text: '雅莹集团尖峰谷电能耗',
+                    text: '捷顺旅游尖峰谷电能耗',
                     textStyle: {
                         color: "white"
                     }
@@ -936,8 +936,8 @@ function jianFengGuPing() {
 }
 
 //厂房轮播参数
-var comList = ['1', '2', '3'];
-var comNameList = ["雅莹集团","亮兮柯电气有限公司","捷顺旅游制品有限公司"];
+var comList = ['2', '3' ];
+var comNameList = ["亮兮柯电气有限公司","捷顺旅游制品有限公司"];
 function showWE() {
     var comlen = comList.length;
     var comIndex = 0;

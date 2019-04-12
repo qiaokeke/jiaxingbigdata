@@ -22,7 +22,7 @@
                     <!-- 左边顶部 -->
                     <div id="left-top" class="set-height">
                         <div class="weather-left col-lg-4 col-md-4">
-                            <img src="/static/picture/weather/duoyun.png" id="weather-img" />
+                            <img src="/static/picture/weather/sun.png" id="weather-img" />
                             <p></p>
                             <p>PM2.5:21μg/m³</p>
                             <p>PM10:32μg/m³</p>
@@ -33,12 +33,12 @@
                         </div>
                         <div class="weather-right">
                             <div class="weather-text">
-                                <div class="weather-text-left"><span class="centigrade">17&#176;</span></div>
-                                <div class="weather-text-right">嘉兴<br />多云</div>
+                                <div class="weather-text-left"><span class="centigrade">12&#176;</span></div>
+                                <div class="weather-text-right">嘉兴<br />晴</div>
                             </div>
                             <div class="weather-bottom">
                                 <div class="weather-bottom-left">
-                                    <p>2&#176; ~ 12&#176;  北风三级</p>
+                                    <p>10&#176; ~ 18&#176;  北风三级</p>
                                     <p>湿度：28%</p>
                                     <p>PH值:6.8</p>
                                     <p>蚀度:0.5</p>
@@ -122,6 +122,14 @@
                                 <td>12:34:00 18/10</td>
                             </tr>
                             <tr>
+                                <td>天正集团有限公司</td>
+                                <td>0</td>
+                                <td>23.52</td>
+                                <td>578.66</td>
+                                <td>电表数据读取失败</td>
+                                <td>14:26:00 18/10</td>
+                            </tr>
+                            <tr>
                                 <td>荣光精密部件（嘉兴）有限公司</td>
                                 <td>0</td>
                                 <td>23.52</td>
@@ -163,8 +171,8 @@
                     <div id="right-top" class="set-height"></div>
                     <!-- 右边中部 -->
                     <div id="right-middle" class="set-height">
-                        <h5 style="margin-left: 0;margin-top: 0;">数据集中器在线数量: 4</h5>
-                        <h5 style="margin-left: 0;margin-top: 20px;">智能硬件在线数量:   10</h5>
+                        <h5 style="margin-left: 0;margin-top: 0;">数据集中器在线数量: 50</h5>
+                        <h5 style="margin-left: 0;margin-top: 20px;">智能硬件在线数量:   69</h5>
                         <div id="right-middle-child"></div>
                     </div>
                     <!-- 右边底部 -->

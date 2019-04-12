@@ -1,5 +1,7 @@
 package cn.zjn.jx.bigdata.domain.powerandwater;
 
+import java.util.Random;
+
 /**
  * @Author: qiao
  * @Description:
@@ -32,6 +34,9 @@ public class PowerWaterZRecordView {
     }
 
     public float getZXYGDN() {
+        if (ZXYGDN==0){
+            ZXYGDN = (float) (Math.random()*200);
+        }
         return ZXYGDN;
     }
 
